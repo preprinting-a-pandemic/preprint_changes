@@ -24,7 +24,7 @@ library(rvest)
 max_results_per_page <- 100
 base_url <- "https://api.biorxiv.org/details/"
 
-start <- "2013-11-01"
+start <- "2020-04-20"
 end <- "2020-04-30"
 
 getPreprintData <- function(server) {
@@ -329,6 +329,30 @@ word_count <- function(string) {
   sapply(strsplit(string, " "), length)
 }
 
+getLinks <- function(doi) {
+  
+  base_url = "https://www.biorxiv.org/content/"
+  
+  url <- paste0(base_url, doi, "v1.full")
+  
+  html <- read_html(url)
+  
+  # Get all nodes contained in article full text
+  data <- html %>%
+    html_nodes(".fulltext-view")
+  
+  links <- data %>%
+    html_nodes("p") %>%
+    html_nodes("a") %>%
+    html_attr('href')
+
+  return(list(
+    doi = doi,
+    links = links
+  ))
+  
+}
+
 # Scrape the bioRxiv and medRxiv websites for usage stats
 getWordCounts <- function(doi) {
   
@@ -409,6 +433,8 @@ getWordCounts <- function(doi) {
 # to prevent errors interrupting the process
 getWordCountsSafely <- safely(getWordCounts)
 
+getLinksSafely <- safely(getLinks)
+
 biorxiv_preprints <- preprints %>% 
   filter(source == "biorxiv")
 
@@ -416,6 +442,8 @@ biorxiv_preprints <- preprints %>%
 pb <- progress_estimated(length(biorxiv_preprints$doi))
 
 word_counts <- map(biorxiv_preprints$doi, ~ getWordCountsSafely(.))
+
+links <- map(head(biorxiv_preprints$doi,5), ~ getLinksSafely(.))
 
 word_counts_df <- map_dfr(word_counts, ~ tibble(doi = .$result$doi,
                                                 n_words = .$result$word_count,
