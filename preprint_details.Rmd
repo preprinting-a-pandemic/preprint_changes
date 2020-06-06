@@ -345,10 +345,14 @@ getLinks <- function(doi) {
     html_nodes("p") %>%
     html_nodes("a") %>%
     html_attr('href')
+  
+  outlinks <- list() #the list where i want the output to be saved in
+
+  for(i in links){if(substring(i, 1, 1)!='#'){outlinks[[length(outlinks)+1]]<- c(i)}}
 
   return(list(
     doi = doi,
-    links = links
+    links = outlinks
   ))
   
 }
