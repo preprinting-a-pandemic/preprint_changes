@@ -1,4 +1,4 @@
-page_id, doi,covid_preprint,annotator,section,label,score
+page_id,doi,covid_preprint,annotator,section,label,score
 1,10.1101/19005710,False,Dey   Gautam,conclusions,nounchange,1
 1,10.1101/19005710,False,Jessica  Polka,context,nounchange,1
 1,10.1101/19005710,False,Mate  Palfy,context,nounchange,1
