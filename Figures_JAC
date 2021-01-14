@@ -1,0 +1,276 @@
+# Load libraries and set theme
+
+pacman::p_load("tidyverse", "colorspace", "lubridate", "plotly", "scholar", "ggpubr", "patchwork", "rvest")
+
+
+theme_set(theme_minimal() +
+            theme(text = element_text(size = 12),
+                  axis.title.x = element_text(margin = margin(20, 0, 0, 0)),
+                  axis.title.y = element_text(margin = margin(0, 20, 0, 0)),
+                  legend.key.size = unit(0.5, "cm"),
+                  legend.text = element_text(size = 10),
+                  panel.border = element_rect(color = "#E0E0E0", size = 0.5, fill = NA),
+                  strip.background = element_rect(fill = "#FAFAFA", color = "#E0E0E0"),
+                  panel.spacing = unit(2, "lines")))
+
+
+# Data import 
+
+preprint_info <- read_csv("./input/preprint_info.csv")
+main_body_changes <- read.csv("./input/main_body_changes.csv")
+abstract_scoring <- read_csv("./output/abstract_scoring.csv")
+total_panels <- read.delim("./input/total_panels_3.txt")
+preprint_full <- read_csv("./output/preprint_details.csv")
+
+# Figures
+
+# Figure 1 
+
+F1A <- preprint_full %>%
+  mutate(covid_preprint = case_when(
+    covid_preprint == T ~ "COVID article",
+    covid_preprint == F ~ "Non-COVID article"
+  )) %>% 
+  count(is_published, covid_preprint) %>% 
+  group_by(covid_preprint) %>%
+  mutate(proportion = (n/sum(n)) * 100) %>% 
+  filter(is_published == T) %>%
+  ggplot(aes(x = covid_preprint, y = proportion, fill = covid_preprint))+
+  geom_col(position = "dodge") +
+  labs( y ="Percentage of preprints published between 1st Jan - 30 April", 
+        x = "COVID preprint") +
+  scale_fill_manual(values = qualitative_hcl(n = 2, palette = "Set2")) +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  theme(plot.title = element_text(hjust = 0.5)) +
+  theme(legend.position = "bottom")
+
+F1B <- main_body_changes %>%
+mutate(covid_preprint = case_when(
+  covid_preprint == T ~ "COVID article",
+  covid_preprint == F ~ "non-COVID article"),
+  peer_review = factor(peer_review, 
+                       levels = c(0:1),
+                       labels = c("No",
+                                  "Yes"))) %>%
+  count(covid_preprint, peer_review) %>%
+  group_by(covid_preprint) %>%
+  mutate(proportion = (n/sum(n))*100) %>%
+  ungroup %>%
+  ggplot(aes(x = peer_review, y = proportion, fill = covid_preprint)) +
+  geom_col(position = "dodge", color = "grey50", size = 0.25) +
+  labs(x = "Transparent peer-review", y = "% of preprints", fill = "") +
+  theme_minimal() +
+  scale_fill_manual(values = qualitative_hcl(n = 2, palette = "Set2")) +  
+  theme(text = element_text(size = 16)) +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  guides(color = FALSE) +
+  theme(legend.position = "bottom")
+
+F1C <- main_body_changes %>%
+  mutate(covid_preprint = case_when(
+    covid_preprint == T ~ "COVID article",
+    covid_preprint == F ~ "non-COVID article"),
+    source_data = factor(source_data, 
+                         levels = c(-2, -1, 0, 1, 2),
+                         labels = c("Less accessible",
+                                    "Upon request", 
+                                    "Supplemental or repository", 
+                                    "More available",
+                                    "NA"))) %>%
+  count(covid_preprint, source_data) %>%
+  group_by(covid_preprint) %>%
+  mutate(proportion = (n/sum(n))*100) %>%
+  ungroup %>% 
+  ggplot(aes(x = source_data, y = proportion, fill = covid_preprint)) +
+  geom_col(position = "dodge", color = "grey50", size = 0.25) +
+  labs(x = "Data availability", y = "Percentage of articles", fill = "") +
+  theme_minimal() +
+  scale_fill_manual(values = qualitative_hcl(n = 2, palette = "Set2")) +  
+  theme(text = element_text(size = 16)) +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  guides(color = FALSE) +
+  theme(legend.position = "bottom")
+
+F1D <- main_body_changes %>%
+  mutate(covid_preprint = case_when(
+    covid_preprint == T ~ "COVID article",
+    covid_preprint == F ~ "non-COVID article"),
+    author_list = factor(author_list,
+                         levels = c(0:5),
+                         labels = c("no change",
+                                    "Author added",
+                                    "Author removed",
+                                    "Change in corressponding author",
+                                    "Added & corressponding author change",
+                                    "Removed & corressponding author change"))) %>%
+  count(covid_preprint, author_list) %>%
+  group_by(covid_preprint) %>% 
+  mutate(proportion = (n/sum(n))*100) %>%
+  ungroup() %>% 
+  ggplot(aes(x = author_list, y = proportion, fill = covid_preprint)) +
+  geom_col(position = "dodge", color = "grey50", size = 0.25) +
+  labs(x = "Change in authors", y = "% of preprints", fill = "") +
+  theme_minimal() +
+  scale_fill_manual(values = qualitative_hcl(n = 2, palette = "Set2")) +
+  theme(text = element_text(size = 16)) +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  guides(color = FALSE) +
+  theme(legend.position = "bottom")
+
+
+# Patchwork
+Fig_1 <- F1A + F1B + F1C + F1D +
+  plot_layout(ncol = 2) +
+  # plot_layout(guides = "collect") +
+  plot_annotation(tag_levels = "A")
+
+Fig_1 #+ 
+ggsave("./figures/changes_Fig_1.png", width = 10, height = 12)
+  
+  
+# Figure 2 
+
+F2A <- abstract_scoring %>% 
+  mutate(covid_preprint = case_when(
+    covid_preprint == T ~ "COVID article",
+    covid_preprint == F ~ "non-COVID article")) %>% 
+  filter(covid_preprint != "NA") %>%
+  ggplot(aes(x= covid_preprint, y = difflib_standard_change_ratio, color = covid_preprint)) +
+  geom_jitter(alpha = 0.3) +
+  geom_boxplot(alpha = 0.3) +
+  theme_minimal() +
+  theme(legend.position = "bottom") +
+  labs(x = "covid article", y = "Change ratio") #+
+ # theme(axis.text.x = element_text(angle = 45, hjust = 1)) #+
+ggsave("./figures/change_ratio_boxplot.png", height = 6, width = 10) 
+
+F2B <-  abstract_scoring %>% 
+  mutate(covid_preprint = case_when(
+    covid_preprint == T ~ "COVID article",
+    covid_preprint == F ~ "non-COVID article")) %>% 
+  filter(covid_preprint != "NA") %>%
+  ggplot(aes(x= covid_preprint, y = word_change_ratio, color = covid_preprint)) +
+  geom_jitter(alpha = 0.3) +
+  geom_boxplot(alpha = 0.3) +
+  theme_minimal() +
+  theme(legend.position = "bottom") +
+  labs(x = "covid article", y = "Word change ratio") #+
+# theme(axis.text.x = element_text(angle = 45, hjust = 1)) #+
+ggsave("./figures/word_change_ratio_boxplot.png", height = 6, width = 10)  
+  
+F2C <- abstract_scoring %>% 
+  mutate(covid_preprint = case_when(
+    covid_preprint == T ~ "COVID article",
+    covid_preprint == F ~ "non-COVID article")) %>% 
+  mutate(score_new = case_when(
+    score_new == 0 ~ "No change",
+    score_new == 1 ~ "Strengthening/softening, minor",
+    score_new == 2 ~ "Major conclusion change")) %>%
+  filter(score_new != "NA") %>%
+  count(score_new, covid_preprint) %>% 
+  ggplot(aes(x = score_new, y = n, fill = covid_preprint)) +
+  geom_col(position = "dodge") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  theme_minimal() +
+  theme(legend.position = "bottom") +
+  labs(x = "Scored change", y = "Number of scored abstracts") #+
+ggsave("./figures/abstract_change_v2.png", height = 6, width = 10)
+  
+F2D <- abstract_scoring %>% 
+  mutate(covid_preprint = case_when(
+    covid_preprint == T ~ "COVID article",
+    covid_preprint == F ~ "non-COVID article")) %>% 
+  filter(covid_preprint != "NA") %>% 
+  ggplot(aes(x=covid_preprint, y=`diff_pos-neg_scores`, color = covid_preprint)) +
+  geom_boxplot(alpha = 0.3) +
+  geom_jitter() +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  theme_minimal() +
+  theme(legend.position = "bottom") +
+  labs(x = "COVID article", y = "Difference in scores")
+
+F2E <- 
+  
+  
+
+  
+F2F <- 
+
+# Patchwork
+Fig_2 <- F2A + F2B + F2C + F2D +
+  plot_layout(ncol = 2) +
+  # plot_layout(guides = "collect") +
+  plot_annotation(tag_levels = "A")
+
+Fig_2 #+ 
+ggsave("./figures/changes_Fig_2.png", width = 10, height = 12)
+
+
+# Figure 3 ------------
+
+F3A <-  total_panels %>%   
+  ggplot(aes(x = preprint_paper, y = main_total, fill = preprint_paper)) +
+  geom_boxplot(outlier.shape = NA, alpha = 0.2) +
+  geom_jitter(shape = 21, size = 0.2, alpha = 0.2, width = 0.3) +
+  labs(x = "", y = "total panels & tables", fill = "") +
+  scale_color_manual(values = qualitative_hcl(2, palette = "Set2")) +
+  scale_x_discrete(labels = function(x) str_wrap(x, width = 12)) +
+  theme(text = element_text(size = 16)) +
+  theme_minimal() +
+  theme(legend.position = "bottom") +
+  labs(x = "Article type", y = "Total panels and tables")
+  guides(color = FALSE) #+
+ggsave("./figures/total_panels.png", height = 8, width = 10, dpi = 300)  
+
+F3B <- main_body_changes %>%
+  mutate(covid_preprint = case_when(
+    covid_preprint == T ~ "COVID preprint",
+    covid_preprint == F ~ "non-COVID preprint")) %>% 
+  ggplot(aes(y = panel_change, x = covid_preprint, color = covid_preprint)) +
+  geom_jitter() +
+  geom_boxplot() +
+  theme_minimal() +
+  theme(legend.position = "bottom") +
+  labs(x = "COVID article", y = "Difference in number of panels and tables") +
+ggsave("./figures/main_panels_change.png", height = 8, width = 10, dpi = 300)
+
+F3C <- main_body_changes %>%
+  mutate(covid_preprint = case_when(
+    covid_preprint == T ~ "COVID preprint",
+    covid_preprint == F ~ "non-COVID preprint"),
+    change_outcomes = factor(change_outcomes, 
+                             levels = c(0:4),
+                             labels = c("No real change", 
+                                        "Figures rearranged", 
+                                        "Significant content added", 
+                                        "Significant content removed", 
+                                        "Content added and removed"))) %>%
+  count(covid_preprint, change_outcomes) %>%
+  group_by(covid_preprint) %>%
+  mutate(proportion = (n/sum(n))*100) %>%
+  ungroup %>% 
+  ggplot(aes(x = change_outcomes, y = proportion, fill = covid_preprint)) +
+  geom_col(position = "dodge", color = "grey50", size = 0.25) +
+  labs(x = "Main body change", y = "% of preprints", fill = "") +
+  theme_minimal() +
+  scale_fill_manual(values = qualitative_hcl(n = 2, palette = "Set2")) +  
+  theme_minimal() +
+  theme(legend.position = "bottom") +
+  labs(x = "Classification of change", y = "Percentage of abstracts") +
+ #  theme(text = element_text(size = 16)) +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  guides(color = FALSE) #+
+ggsave("./figures/main_body_change.png", height = 8, width = 10, dpi = 300)
+
+
+# Patchwork
+Fig_3 <- F3A + F3B + F3C +
+  plot_layout(ncol = 2) +
+  # plot_layout(guides = "collect") +
+  plot_annotation(tag_levels = "A")
+
+Fig_3 #+ 
+ggsave("./figures/changes_Fig_3.png", width = 10, height = 12)
