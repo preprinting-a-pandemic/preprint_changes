@@ -67,6 +67,7 @@ page_id,doi,covid_preprint,annotator,section,label,label+modifier,label_modifier
 12,10.1101/19007021,False,Mate  Palfy,context,nounchange,nounchange,,1,1+,+
 12,10.1101/19007021,False,Mate  Palfy,results,stat,stat-,-,1,1-,-
 12,10.1101/19007021,False,Jessica  Polka,conclusions,added,added,,1,1+,+
+12,10.1101/19007021,False,Mate  Palfy,conclusions,added,added,,1,1+,+
 12,10.1101/19007021,False,Mate  Palfy,conclusions,added,added,,1,1-,-
 13,10.1101/19007161,False,Jessica  Polka,results,removed,removed,,1,1-,-
 13,10.1101/19007161,False,Jessica  Polka,results,stat,stat-,-,1,1-,-
@@ -89,6 +90,7 @@ page_id,doi,covid_preprint,annotator,section,label,label+modifier,label_modifier
 16,10.1101/19007542,False,Jessica  Polka,results,nounchange,nounchange,,1,1+,+
 16,10.1101/19007542,False,Jessica  Polka,context,removed,removed,,1,1,
 16,10.1101/19007542,False,Mate  Palfy,results,added,added,,1,1+,+
+16,10.1101/19007542,False,jonathon coates,results,stat,stat-,-,1,1-,-
 16,10.1101/19007542,False,Mate  Palfy,context,removed,removed,,1,1,
 16,10.1101/19007542,False,jonathon coates,results,stat,stat-,-,1,1-,-
 16,10.1101/19007542,False,Jessica  Polka,results,added,added,,1,1+,+
@@ -99,8 +101,10 @@ page_id,doi,covid_preprint,annotator,section,label,label+modifier,label_modifier
 17,10.1101/19007666,False,Jessica  Polka,results,stat,stat-,-,1,1-,-
 17,10.1101/19007666,False,Jessica  Polka,results,stat,stat-,-,1,1-,-
 17,10.1101/19007666,False,Jessica  Polka,results,stat,stat-,-,1,1-,-
+17,10.1101/19007666,False,Jessica  Polka,results,stat,stat-,-,1,1-,-
 19,10.1101/19007849,False,Jessica  Polka,context,added,added,,1,1,
 19,10.1101/19007849,False,Jessica  Polka,context,removed,removed,,1,1,
+19,10.1101/19007849,False,Jessica  Polka,context,added,added,,1,1,
 19,10.1101/19007849,False,Jessica  Polka,context,added,added,,1,1,
 19,10.1101/19007849,False,Jessica  Polka,context,removed,removed,,1,1,
 19,10.1101/19007849,False,Jessica  Polka,context,added,added,,1,1,
@@ -156,6 +160,8 @@ page_id,doi,covid_preprint,annotator,section,label,label+modifier,label_modifier
 35,10.1101/19010579,False,jonathon coates,results,added,added,,1,1+,+
 36,10.1101/19010728,False,Dey   Gautam,context,added,added,,1,1+,+
 37,10.1101/19010975,False,Dey   Gautam,results,stat,stat+,+,1,1+,+
+37,10.1101/19010975,False,Dey   Gautam,results,stat,stat+,+,1,1+,+
+38,10.1101/19011049,False,Jessica  Polka,results,effect,effect+,+,1,1+,+
 38,10.1101/19011049,False,Jessica  Polka,results,stat,stat-,-,1,1-,-
 38,10.1101/19011049,False,Mate  Palfy,results,added,added,,1,1+,+
 39,10.1101/19011064,False,Jessica  Polka,context,removed,removed,,1,1,
@@ -235,8 +241,10 @@ page_id,doi,covid_preprint,annotator,section,label,label+modifier,label_modifier
 49,10.1101/19012880,False,jonathon coates,context,removed,removed,,1,1-,-
 49,10.1101/19012880,False,Jessica  Polka,context,nounchange,nounchange,,1,1,
 49,10.1101/19012880,False,Jessica  Polka,context,removed,removed,,1,1,
+49,10.1101/19012880,False,Jessica  Polka,context,removed,removed,,1,1,
 49,10.1101/19012880,False,Mate  Palfy,conclusions,nounchange,nounchange,,1,1+,+
 49,10.1101/19012880,False,Jessica  Polka,conclusions,nounchange,nounchange,,1,1,
+56,10.1101/2019.12.17.19015198,False,Jessica  Polka,context,added,added,,1,1,
 56,10.1101/2019.12.17.19015198,False,Jessica  Polka,context,added,added,,1,1,
 56,10.1101/2019.12.17.19015198,False,Jessica  Polka,context,added,added,,1,1,
 56,10.1101/2019.12.17.19015198,False,Jessica  Polka,context,added,added,,1,1,
@@ -267,8 +275,10 @@ page_id,doi,covid_preprint,annotator,section,label,label+modifier,label_modifier
 62,10.1101/2020.01.03.20016436,False,Jessica  Polka,results,stat,stat,,1,1,
 62,10.1101/2020.01.03.20016436,False,Jessica  Polka,results,stat,stat,,1,1+,+
 62,10.1101/2020.01.03.20016436,False,Jessica  Polka,results,nounchange,nounchange,,1,1,
+62,10.1101/2020.01.03.20016436,False,Jessica  Polka,results,stat,stat,,1,1+,+
 62,10.1101/2020.01.03.20016436,False,Mate  Palfy,results,stat,stat,,1,1+,+
 62,10.1101/2020.01.03.20016436,False,Dey   Gautam,results,added,added,,2,2,
+62,10.1101/2020.01.03.20016436,False,Jessica  Polka,results,nounchange,nounchange,,1,1+,+
 62,10.1101/2020.01.03.20016436,False,Mate  Palfy,results,added,added,,1,1+,+
 62,10.1101/2020.01.03.20016436,False,Mate  Palfy,context,removed,removed,,1,1,
 62,10.1101/2020.01.03.20016436,False,jonathon coates,results,stat,stat-,-,1,1-,-
@@ -304,6 +314,7 @@ page_id,doi,covid_preprint,annotator,section,label,label+modifier,label_modifier
 72,10.1101/2020.01.23.20017566,False,Jessica  Polka,context,removed,removed,,1,1,
 72,10.1101/2020.01.23.20017566,False,Dey   Gautam,context,removed,removed,,1,1,
 72,10.1101/2020.01.23.20017566,False,jonathon coates,context,removed,removed,,1,1-,-
+72,10.1101/2020.01.23.20017566,False,jonathon coates,results,added,added,,1,1+,+
 72,10.1101/2020.01.23.20017566,False,jonathon coates,results,stat,stat+,+,1,1+,+
 72,10.1101/2020.01.23.20017566,False,jonathon coates,results,stat,stat+,+,1,1+,+
 72,10.1101/2020.01.23.20017566,False,Mate  Palfy,results,added,added,,1,1+,+
@@ -342,6 +353,7 @@ page_id,doi,covid_preprint,annotator,section,label,label+modifier,label_modifier
 76,10.1101/2020.01.26.20018754,True,Jessica  Polka,results,stat,stat,,1,1+,+
 76,10.1101/2020.01.26.20018754,True,Dey   Gautam,results,added,added,,2,2,
 76,10.1101/2020.01.26.20018754,True,Jessica  Polka,conclusions,effect,effect+,+,2,2,
+76,10.1101/2020.01.26.20018754,True,Mate  Palfy,results,effect,effect-,-,1,1,
 76,10.1101/2020.01.26.20018754,True,jonathon coates,results,added,added,,1,1+,+
 79,10.1101/2020.01.27.20018986,True,Jessica  Polka,context,nounchange,nounchange,,1,1,
 79,10.1101/2020.01.27.20018986,True,Jessica  Polka,context,removed,removed,,1,1,
@@ -370,6 +382,7 @@ page_id,doi,covid_preprint,annotator,section,label,label+modifier,label_modifier
 81,10.1101/2020.01.31.20019901,True,Jessica  Polka,results,nounchange,nounchange,,2,2,
 81,10.1101/2020.01.31.20019901,True,jonathon coates,results,removed,removed,,1,1-,-
 81,10.1101/2020.01.31.20019901,True,jonathon coates,results,stat,stat+,+,1,1+,+
+81,10.1101/2020.01.31.20019901,True,jonathon coates,results,stat,stat+,+,1,1+,+
 81,10.1101/2020.01.31.20019901,True,jonathon coates,results,added,added,,1,1+,+
 81,10.1101/2020.01.31.20019901,True,Dey   Gautam,context,added,added,,2,2,
 81,10.1101/2020.01.31.20019901,True,Mate  Palfy,results,effect,effect-,-,1,1,
@@ -378,6 +391,7 @@ page_id,doi,covid_preprint,annotator,section,label,label+modifier,label_modifier
 81,10.1101/2020.01.31.20019901,True,Jessica  Polka,results,removed,removed,,1,1,
 81,10.1101/2020.01.31.20019901,True,Mate  Palfy,conclusions,nounchange,nounchange,,2,2,
 81,10.1101/2020.01.31.20019901,True,Jessica  Polka,conclusions,nounchange,nounchange,,1,1,
+81,10.1101/2020.01.31.20019901,True,Mate  Palfy,conclusions,nounchange,nounchange,,1,1,
 82,10.1101/2020.01.31.928796,True,Jessica  Polka,context,removed,removed,,1,1,
 82,10.1101/2020.01.31.928796,True,Jessica  Polka,conclusions,added,added,,1,1+,+
 83,10.1101/2020.02.02.931162,True,jonathon coates,results,added,added,,1,1+,+
@@ -400,6 +414,7 @@ page_id,doi,covid_preprint,annotator,section,label,label+modifier,label_modifier
 86,10.1101/2020.02.06.20020974,True,Jessica  Polka,context,added,added,,1,1,
 86,10.1101/2020.02.06.20020974,True,jonathon coates,context,added,added,,1,1+,+
 86,10.1101/2020.02.06.20020974,True,jonathon coates,results,added,added,,1,1+,+
+86,10.1101/2020.02.06.20020974,True,Mate  Palfy,results,effect,effect-,-,1,1,
 86,10.1101/2020.02.06.20020974,True,Jessica  Polka,context,added,added,,1,1,
 86,10.1101/2020.02.06.20020974,True,Jessica  Polka,results,effect,effect+,+,1,1,
 86,10.1101/2020.02.06.20020974,True,Jessica  Polka,results,added,added,,1,1+,+
@@ -443,6 +458,7 @@ page_id,doi,covid_preprint,annotator,section,label,label+modifier,label_modifier
 88,10.1101/2020.02.11.20020735,True,Mate  Palfy,conclusions,added,added,,2,2,
 88,10.1101/2020.02.11.20020735,True,Mate  Palfy,conclusions,added,added,,2,2,
 89,10.1101/2020.02.11.20022186,True,Jessica  Polka,context,removed,removed,,1,1-,-
+89,10.1101/2020.02.11.20022186,True,Jessica  Polka,context,added,added,,1,1+,+
 89,10.1101/2020.02.11.20022186,True,Jessica  Polka,context,nounchange,nounchange,,1,1,
 89,10.1101/2020.02.11.20022186,True,Jessica  Polka,context,nounchange,nounchange,,1,1,
 89,10.1101/2020.02.11.20022186,True,Mate  Palfy,context,added,added,,1,1,
@@ -472,6 +488,7 @@ page_id,doi,covid_preprint,annotator,section,label,label+modifier,label_modifier
 91,10.1101/2020.02.13.20022806,True,jonathon coates,results,removed,removed,,1,1-,-
 92,10.1101/2020.02.13.945485,True,Jessica  Polka,context,added,added,,1,1,
 92,10.1101/2020.02.13.945485,True,Mate  Palfy,context,stat,stat-,-,1,1-,-
+92,10.1101/2020.02.13.945485,True,Mate  Palfy,results,stat,stat-,-,1,1-,-
 92,10.1101/2020.02.13.945485,True,Mate  Palfy,conclusions,nounchange,nounchange,,1,1,
 94,10.1101/2020.02.15.20023374,False,Dey   Gautam,context,removed,removed,,1,1,
 94,10.1101/2020.02.15.20023374,False,Jessica  Polka,context,removed,removed,,1,1-,-
@@ -484,6 +501,7 @@ page_id,doi,covid_preprint,annotator,section,label,label+modifier,label_modifier
 95,10.1101/2020.02.16.20023671,True,Dey   Gautam,results,added,added,,1,1,
 95,10.1101/2020.02.16.20023671,True,Jessica  Polka,conclusions,added,added,,2,2,
 97,10.1101/2020.02.17.952903,True,Jessica  Polka,context,effect,effect+,+,1,1,
+97,10.1101/2020.02.17.952903,True,Jessica  Polka,context,removed,removed,,1,1,
 97,10.1101/2020.02.17.952903,True,Jessica  Polka,context,nounchange,nounchange,,1,1,
 97,10.1101/2020.02.17.952903,True,Jessica  Polka,conclusions,stat,stat-,-,1,1+,+
 97,10.1101/2020.02.17.952903,True,Jessica  Polka,context,removed,removed,,1,1,
@@ -533,12 +551,14 @@ page_id,doi,covid_preprint,annotator,section,label,label+modifier,label_modifier
 106,10.1101/2020.02.26.20026971,True,jonathon coates,results,removed,removed,,1,1-,-
 106,10.1101/2020.02.26.20026971,True,jonathon coates,results,effect,effect-,-,1,1-,-
 106,10.1101/2020.02.26.20026971,True,jonathon coates,results,stat,stat,,1,1-,-
+106,10.1101/2020.02.26.20026971,True,jonathon coates,results,stat,stat,,1,1-,-
 106,10.1101/2020.02.26.20026971,True,Jessica  Polka,results,nounchange,nounchange,,1,1,
 106,10.1101/2020.02.26.20026971,True,jonathon coates,results,stat,stat,,1,1-,-
 106,10.1101/2020.02.26.20026971,True,jonathon coates,results,removed,removed,,1,1-,-
 106,10.1101/2020.02.26.20026971,True,jonathon coates,results,effect,effect-,-,1,1-,-
 106,10.1101/2020.02.26.20026971,True,jonathon coates,results,effect,effect-,-,1,1-,-
 106,10.1101/2020.02.26.20026971,True,Mate  Palfy,results,added,added,,1,1,
+106,10.1101/2020.02.26.20026971,True,Dey   Gautam,results,stat,stat-,-,1,1,
 106,10.1101/2020.02.26.20026971,True,jonathon coates,results,stat,stat,,1,1+,+
 106,10.1101/2020.02.26.20026971,True,Mate  Palfy,results,stat,stat,,1,1+,+
 106,10.1101/2020.02.26.20026971,True,Jessica  Polka,results,added,added,,1,1+,+
@@ -560,6 +580,7 @@ page_id,doi,covid_preprint,annotator,section,label,label+modifier,label_modifier
 109,10.1101/2020.02.27.20028639,True,Jessica  Polka,results,effect,effect+,+,1,1+,+
 109,10.1101/2020.02.27.20028639,True,Dey   Gautam,conclusions,effect,effect-,-,1,1,
 109,10.1101/2020.02.27.20028639,True,jonathon coates,results,added,added,,1,1-,-
+109,10.1101/2020.02.27.20028639,True,Jessica  Polka,context,added,added,,1,1,
 110,10.1101/2020.02.27.20028829,True,jonathon coates,context,effect,effect+,+,1,1+,+
 110,10.1101/2020.02.27.20028829,True,jonathon coates,context,effect,effect+,+,1,1+,+
 110,10.1101/2020.02.27.20028829,True,Jessica  Polka,results,added,added,,1,1+,+
@@ -598,6 +619,7 @@ page_id,doi,covid_preprint,annotator,section,label,label+modifier,label_modifier
 122,10.1101/2020.03.07.20031575,True,Jessica  Polka,context,stat,stat-,-,1,1-,-
 122,10.1101/2020.03.07.20031575,True,Jessica  Polka,context,added,added,,1,1,
 122,10.1101/2020.03.07.20031575,True,Dey   Gautam,context,added,added,,1,1,
+122,10.1101/2020.03.07.20031575,True,Jessica  Polka,results,nounchange,nounchange,,1,1+,+
 122,10.1101/2020.03.07.20031575,True,jonathon coates,results,stat,stat,,1,1+,+
 122,10.1101/2020.03.07.20031575,True,jonathon coates,results,stat,stat,,1,1+,+
 122,10.1101/2020.03.07.20031575,True,jonathon coates,results,added,added,,1,1+,+
@@ -618,6 +640,7 @@ page_id,doi,covid_preprint,annotator,section,label,label+modifier,label_modifier
 123,10.1101/2020.03.08.20032946,True,Jessica  Polka,conclusions,added,added,,2,2,
 123,10.1101/2020.03.08.20032946,True,jonathon coates,conclusions,added,added,,2,2,
 124,10.1101/2020.03.09.983064,True,jonathon coates,context,effect,effect,,1,1+,+
+124,10.1101/2020.03.09.983064,True,Jessica  Polka,conclusions,stat,stat+,+,1,1+,+
 125,10.1101/2020.03.09.983247,True,Jessica  Polka,conclusions,stat,stat+,+,1,1+,+
 125,10.1101/2020.03.09.983247,True,Dey   Gautam,results,effect,effect+,+,1,1,
 126,10.1101/2020.03.09.984856,True,jonathon coates,conclusions,removed,removed,,2,2,
@@ -625,6 +648,7 @@ page_id,doi,covid_preprint,annotator,section,label,label+modifier,label_modifier
 129,10.1101/2020.03.13.20034496,True,Jessica  Polka,context,removed,removed,,1,1-,-
 129,10.1101/2020.03.13.20034496,True,Jessica  Polka,conclusions,removed,removed,,1,1-,-
 129,10.1101/2020.03.13.20034496,True,jonathon coates,context,removed,removed,,1,1-,-
+129,10.1101/2020.03.13.20034496,True,jonathon coates,results,added,added,,1,1+,+
 130,10.1101/2020.03.13.20035410,True,Jessica  Polka,results,effect,effect-,-,1,1-,-
 130,10.1101/2020.03.13.20035410,True,Dey   Gautam,results,removed,removed,,1,1,
 130,10.1101/2020.03.13.20035410,True,Jessica  Polka,results,added,added,,1,1+,+

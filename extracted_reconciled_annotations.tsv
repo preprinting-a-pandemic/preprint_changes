@@ -68,6 +68,7 @@ comment_id	abstract_id	annotator	score	comment
 [67]	12	Mate  Palfy	context_nounchange_1+	
 [68]	12	Mate  Palfy	results_stat-_1-	
 [69]	12	Jessica  Polka	conclusions_added_1+	
+[70]	12	Mate  Palfy	conclusions_added_1+	  
 [71]	12	Mate  Palfy	conclusions_added_1-	
 [72]	13	Jessica  Polka	results_removed_1-	 (no longer implies the authors conducted the sequencing and genotyping)
 [73]	13	Jessica  Polka	results_stat-_1-	 but it’s not a sample size decrease as original  abstract mentioned included patients – this is a rearrangement)
@@ -93,6 +94,7 @@ comment_id	abstract_id	annotator	score	comment
 [93]	16	Jessica  Polka	results_nounchange_1+	
 [94]	16	Jessica  Polka	context_removed_1	
 [95]	16	Mate  Palfy	results_added_1+	
+[98]	16	jonathon coates	results_stat-_1-	  
 [99]	16	Mate  Palfy	context_removed_1	 (this is referring to method while stating the result)
 [100]	16	jonathon coates	results_stat-_1-	
 [101]	16	Jessica  Polka	results_added_1+	
@@ -101,11 +103,13 @@ comment_id	abstract_id	annotator	score	comment
 [104]	17	Dey,  Gautam	context_added_1+	
 [105]	17	jonathon coates	results_stat+_1+	
 [106]	17	Jessica  Polka	results_stat-_1-	 (causality)
+[107]	17	Jessica  Polka	results_stat-_1-	 (causality)  
 [108]	17	Jessica  Polka	results_stat-_1-	 (causality)
 [109]	17	Jessica  Polka	results_stat-_1-	 (causality)
 [110]	19	Jessica  Polka	removed_1	
 [111]	19	Jessica  Polka	context_added_1	
 [112]	19	Jessica  Polka	context_removed_1	 (reconciled) (the new introduction doesn’t implicate GC in bone loss but  seems to attribute this to DM)
+[113]	19	Jessica  Polka	context_added_1	  
 [114]	19	Jessica  Polka	context_added_1	
 [115]	19	Jessica  Polka	context_removed_1	
 [116]	19	Jessica  Polka	context_added_1	
@@ -161,6 +165,8 @@ comment_id	abstract_id	annotator	score	comment
 [171]	35	jonathon coates	results_added_1+	
 [172]	36	Dey,  Gautam	context_added_1+	
 [173]	37	Dey,  Gautam	results_stat+_1+	
+[174]	37	Dey,  Gautam	results_stat+_1+	  
+[175]	38	Jessica  Polka	results_effect+_1+	  
 [176]	38	Jessica  Polka	results_stat-_1-	
 [177]	38	Mate  Palfy	results_added_1+	 (specifies ‘other’)
 [178]	39	Jessica  Polka	context_removed_1	
@@ -239,9 +245,11 @@ comment_id	abstract_id	annotator	score	comment
 [252]	49	Dey,  Gautam	context_removed_1	
 [253]	49	jonathon coates	context_removed_1-	
 [254]	49	Jessica  Polka	context_nounchange_1	
+[255]	49	Jessica  Polka	context_removed_1	  
 [256]	49	Jessica  Polka	context_removed_1	
 [257]	49	Mate  Palfy	conclusions_nounchange_1+	 (gives a specific example of a radiation induced complication)
 [258]	49	Jessica  Polka	conclusion_nounchange_1	
+[259]	56	Jessica  Polka	context_added_1	  
 [260]	56	Jessica  Polka	context_added_1	
 [261]	56	Jessica  Polka	context_added_1	
 [262]	56	Jessica  Polka	context_added_1	
@@ -272,8 +280,10 @@ comment_id	abstract_id	annotator	score	comment
 [291]	62	Jessica  Polka	results_statinfo_1	
 [292]	62	Jessica  Polka	results_statinfo_1+	
 [293]	62	Jessica  Polka	results_nounchange_1	 (lowest coverage vaccines has changed) (reconciled)
+[294]	62	Jessica  Polka	results_statinfo_1+	  
 [295]	62	Mate  Palfy	results_statinfo_1+	
 [299]	62	Dey,  Gautam	results_added_2	
+[300]	62	Jessica  Polka	result_nounchange_1+	 (urban->specific areas)  
 [301]	62	Mate  Palfy	results_added_1+	
 [302]	62	Mate  Palfy	context_removed_1	
 [303]	62	jonathon coates	results_stat-_1-	
@@ -309,6 +319,7 @@ comment_id	abstract_id	annotator	score	comment
 [340]	72	Jessica  Polka	context_removed_1	
 [341]	72	Dey,  Gautam	context_removed_1	
 [342]	72	jonathon coates	context_removed_1-	
+[343]	72	jonathon coates	results_added_1+	  
 [344]	72	jonathon coates	results_stat+_1+	
 [345]	72	jonathon coates	results_stat+_1+	
 [346]	72	Mate  Palfy	results_added_1+	
@@ -347,6 +358,7 @@ comment_id	abstract_id	annotator	score	comment
 [381]	76	Jessica  Polka	result_statinfo_1+	
 [382]	76	Dey,  Gautam	results_added_2	
 [383]	76	Jessica  Polka	conclusion_effect+_2	 (recommendation length changed substantially) (reconciled – change  could be very impactful)
+[384]	76	Mate  Palfy	results_effect-_1	  
 [385]	76	jonathon coates	results_added_1+	
 [387]	79	Jessica  Polka	context_nounchange_1	
 [388]	79	Jessica  Polka	context_removed_1	 (it seems that COVID abstracts are often edited to reflect rapidly changing  knowledge and conditions)
@@ -374,6 +386,7 @@ comment_id	abstract_id	annotator	score	comment
 [410]	81	Jessica  Polka	results_nounchange_1	
 [411]	81	Jessica  Polka	results_nounchange_2	 (fluctuated -> declined)
 [412]	81	jonathon coates	results_removed_1-	
+[413]	81	jonathon coates	results_stat+_1+	  
 [414]	81	jonathon coates	results_stat+_1+	
 [415]	81	jonathon coates	results_added_1+	
 [416]	81	Dey,  Gautam	context_added_2	
@@ -383,6 +396,7 @@ comment_id	abstract_id	annotator	score	comment
 [420]	81	Jessica  Polka	results_removed_1	 (increase before travel restriction)
 [421]	81	Mate  Palfy	conclusions_nounchange_2	 (from concluding cases increased until travel restrictions to  concluding that they decreased after travel restrictions)
 [422]	81	Jessica  Polka	conclusion_nounchange_1	
+[423]	81	Mate  Palfy	conclusions_nounchange_1	  
 [425]	82	Jessica  Polka	context_removed_1	 (tool availability)
 [426]	82	Jessica  Polka	conclusions_added_1+	 (though this is likely implied already)
 [427]	83	jonathon coates	results_added_1+	
@@ -405,6 +419,7 @@ comment_id	abstract_id	annotator	score	comment
 [445]	86	Jessica  Polka	context_added_1	
 [446]	86	jonathon coates	context_added_1+	
 [447]	86	jonathon coates	results_added_1+	
+[448]	86	Mate  Palfy	results_effect-_1	  
 [449]	86	Jessica  Polka	context_added_1	
 [450]	86	Jessica  Polka	result_effect+_1	 (from 71.8 to 72.3)
 [451]	86	Jessica  Polka	result_added_1+	
@@ -449,6 +464,7 @@ comment_id	abstract_id	annotator	score	comment
 [491]	88	Mate  Palfy	conclusions_added_2	
 [492]	88	Mate  Palfy	conclusions_added_2	
 [493]	89	Jessica  Polka	context_removed_1-	
+[495]	89	Jessica  Polka	context_added_1+	  
 [498]	89	Mate  Palfy	context_added	
 [499]	89	Jessica  Polka	context_nounchange_1	
 [500]	89	Jessica  Polka	context_nounchange_1	
@@ -479,6 +495,7 @@ comment_id	abstract_id	annotator	score	comment
 [527]	91	jonathon coates	results_removed_1-	
 [528]	92	Jessica  Polka	context_added_1	
 [529]	92	Mate  Palfy	context_stat-_1-	
+[530]	92	Mate  Palfy	results_stat-_1-	  
 [531]	92	Mate  Palfy	conclusions_nounchange_1	
 [532]	94	Dey,  Gautam	context_removed_1	
 [533]	94	Mate  Palfy	context_removed	
@@ -492,6 +509,7 @@ comment_id	abstract_id	annotator	score	comment
 [542]	95	Dey,  Gautam	results_added_1	
 [543]	95	Jessica  Polka	conclusion_added_2	
 [545]	97	Jessica  Polka	context_effect+_1	 (local -> global effect)
+[546]	97	Jessica  Polka	context_removed_1	  
 [547]	97	Jessica  Polka	context_nounchange_1	
 [548]	97	Jessica  Polka	conclusions_stat-_1+	 (extensively -> systematically)
 [549]	97	Jessica  Polka	context_removed_1	
@@ -540,6 +558,7 @@ comment_id	abstract_id	annotator	score	comment
 [592]	106	Mate  Palfy	results_removed_1	
 [593]	106	jonathon coates	results_removed_1-	
 [594]	106	jonathon coates	results_effect-_1-	
+[595]	106	jonathon coates	results_statinfo_1-	  
 [596]	106	jonathon coates	results_statinfo_1-	
 [597]	106	Jessica  Polka	results_nounchange_1	 (assume this is translation)
 [598]	106	jonathon coates	results_statinfo_1-	
@@ -547,6 +566,7 @@ comment_id	abstract_id	annotator	score	comment
 [600]	106	jonathon coates	results_effect-_1-	
 [601]	106	jonathon coates	results_effect-_1-	
 [602]	106	Mate  Palfy	results_added_1	
+[603]	106	Dey,  Gautam	results_stat-_1	  
 [604]	106	jonathon coates	results_statinfo_1+	
 [605]	106	Mate  Palfy	results_statinfo_1+	
 [606]	106	Jessica  Polka	results_added_1+	
@@ -568,6 +588,7 @@ comment_id	abstract_id	annotator	score	comment
 [622]	109	Jessica  Polka	results_effect+_1+	 (specific period in March)
 [623]	109	Dey,  Gautam	conclusion_effect-_1	
 [624]	109	jonathon coates	results_added_1-	
+[625]	109	Jessica  Polka	context_added_1	  
 [626]	110	jonathon coates	context_effect+_1+	
 [627]	110	jonathon coates	context_effect+_1+	
 [628]	110	Jessica  Polka	results_added_1+	
@@ -606,6 +627,7 @@ comment_id	abstract_id	annotator	score	comment
 [661]	122	Jessica  Polka	context_stat-_1-	
 [662]	122	Jessica  Polka	context_added_1	
 [663]	122	Dey,  Gautam	context_added_1	
+[664]	122	Jessica  Polka	result_nounchange_1+	 (now suggests intention to determine cutoff value)  
 [665]	122	jonathon coates	results_statinfo_1+	
 [666]	122	jonathon coates	results_statinfo_1+	
 [667]	122	jonathon coates	results_added_1+	
@@ -626,6 +648,7 @@ comment_id	abstract_id	annotator	score	comment
 [684]	123	Jessica  Polka	conclusion_added_2	
 [685]	123	jonathon coates	conclusion_added_2	
 [686]	124	jonathon coates	context_effect_1+	
+[687]	124	Jessica  Polka	conclusions_stat+_1+	  
 [688]	125	Jessica  Polka	conclusions_stat+_1+	 (now asserts they developed the assay as well)
 [689]	125	Dey,  Gautam	results_effect+_1	
 [690]	126	jonathon coates	conclusion_removed_2	
@@ -633,6 +656,7 @@ comment_id	abstract_id	annotator	score	comment
 [692]	129	Jessica  Polka	context_removed_1-	
 [693]	129	Jessica  Polka	conclusions_removed_1-	
 [694]	129	jonathon coates	context_removed_1-	
+[695]	129	jonathon coates	results_added_1+	  
 [696]	130	Jessica  Polka	results_effect-_1-	 (constant rather than decaying)
 [697]	130	Dey,  Gautam	results_removed_1	
 [698]	130	Jessica  Polka	result_added_1+	
