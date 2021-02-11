@@ -1,0 +1,848 @@
+comment_id	abstract_id	annotator	score	comment
+[1]	1	Jessica  Polka	context_nounchange_1	
+[2]	1	jonathon coates	context_effect-_1	
+[3]	1	Jessica  Polka	conclusion_stat-_1	
+[4]	2	Jessica  Polka	context_added_1-	makes  current  finding  seem  less  ground-breaking
+[5]	2	jonathon coates	results_removed_1-	less  specific
+[6]	2	Mate  Palfy	results_added_1+	
+[7]	2	jonathon coates	results_stat-_1	
+[8]	2	Mate  Palfy	results_removed_1	
+[9]	2	Jessica  Polka	results_nounchange_1-	Changed  from  individuals  with  impairment  to  individuals  with  impairment  who  use  medication
+[10]	2	jonathon coates	resuts_stat+_1+	
+[11]	2	Jessica  Polka	results_stat+_1+	positive  false  discovery  rate  reduced
+[12]	2	Mate  Palfy	results_removed_1	
+[13]	2	Mate  Palfy	conclusions_stat+_1+	
+[14]	2	Jessica  Polka	conclusions_stat-1	
+[15]	2	Jessica  Polka	conclusions_effect-_1	
+[16]	2	Jessica  Polka	conclusion_effect+_1+	
+[17]	3	Jessica  Polka	context_added_1	
+[18]	3	Jessica  Polka	context_nounchange_1	
+[19]	3	Mate  Palfy	context_removed_1	
+[20]	3	jonathon coates	context_removed_1	
+[21]	3	Jessica  Polka	conclusion_stat-_1	
+[22]	3	Jessica  Polka	context_removed_1	
+[23]	3	jonathon coates	context_added_1+	
+[24]	3	Jessica  Polka	context_added_1	
+[25]	3	jonathon coates	results_removed_1	reconciled
+[26]	4	Dey,  Gautam	context_added_1+	
+[27]	4	Mate  Palfy	context_removed_1	
+[28]	4	jonathon coates	results_removed_1	
+[29]	4	Dey,  Gautam	context_added_1+	
+[30]	4	jonathon coates	results_added_1	reconciled
+[31]	4	jonathon coates	results_stat+_1	reconciled
+[32]	4	Dey,  Gautam	conclusion_added_1+	
+[33]	7	Jessica  Polka	context_removed_1	
+[34]	7	Jessica  Polka	context_removed_1+	
+[35]	7	Jessica  Polka	context_nounchange_1	
+[36]	7	Jessica  Polka	context_stat-_1	
+[37]	7	Jessica  Polka	context_removed_1	
+[38]	7	Jessica  Polka	results_stat+_1+	
+[39]	7	Jessica  Polka	results_stat+_1+	
+[40]	7	Jessica  Polka	context_removed_1	
+[41]	7	jonathon coates	results_stat+_1+	
+[42]	8	jonathon coates	results_effect-_1	
+[43]	8	Jessica  Polka	conclusions_stat-_1	
+[44]	8	Jessica  Polka	conclusions_stat-_1	
+[45]	9	Jessica  Polka	context_nounchange_1	
+[46]	9	Dey,  Gautam	conclusions_added_2	reconciled,  premise  of  study  but  racial  disparities  not  noted  elsewhere
+[47]	10	Dey,  Gautam	context_nounchange_1	
+[48]	10	Jessica  Polka	conclusions_removed_1	
+[49]	10	Jessica  Polka	results_removed_1	
+[50]	10	jonathon coates	results_effect-_1	
+[51]	10	jonathon coates	results_added_1	
+[52]	10	Jessica  Polka	conclusions_removed_1	
+[53]	11	Jessica  Polka	context_removed_1	
+[54]	11	Jessica  Polka	context_stat-_1	
+[55]	11	Dey,  Gautam	context_removed_1	
+[56]	11	Mate  Palfy	context_removed_1	
+[57]	11	Mate  Palfy	context_removed_1	
+[58]	11	Jessica  Polka	results_added_1+	
+[59]	11	Mate  Palfy	context_removed_1	
+[60]	11	Mate  Palfy	context_removed_1	
+[61]	11	Mate  Palfy	context_removed_1	
+[62]	11	Mate  Palfy	results_statinfo_1+	
+[63]	11	jonathon coates	conclusion_added_1+	
+[64]	11	Jessica  Polka	conclusion_stat-_1-	strong  ->  clear
+[65]	11	Jessica  Polka	conclusion_removed_1+	
+[66]	12	Jessica  Polka	context_removed_1	
+[67]	12	Mate  Palfy	context_nounchange_1+	
+[68]	12	Mate  Palfy	results_stat-_1	
+[69]	12	Jessica  Polka	conclusions_added_1+	
+[70]	12	Mate  Palfy	conclusions_added_1+	
+[71]	12	Mate  Palfy	conclusions_added_1	
+[72]	13	Jessica  Polka	results_removed_1-	no  longer  implies  the  authors  conducted  the  sequencing  and  genotyping
+[73]	13	Jessica  Polka		Would  have  scored  this  Results_stat-_1-but  it’s  not  a  sample  size  decrease  as  original  abstract  mentioned  included  patients  –  this  is  a  rearrangement
+[74]	13	Jessica  Polka	context_added_1	explicitly  states  quality  control  happened
+[75]	13	Jessica  Polka	context_added_1	makes  it  clear  antidepressants  are  the  pharmacological  treatments
+[76]	13	Mate  Palfy	context_removed_1	
+[77]	13	Mate  Palfy	context_removed_1	
+[78]	13	Mate  Palfy	results_added_1	
+[79]	13	Dey,  Gautam	conclusion_added_1+	
+[80]	13	Jessica  Polka	results_added_1+	
+[81]	13	Jessica  Polka	results_removed_1	
+[82]	14	Mate  Palfy	context_added	
+[83]	14	Jessica  Polka	context_effect-_1	
+[84]	14	Mate  Palfy	context_added	
+[85]	14	Jessica  Polka	context_stat-_1	studies  limited  ->  studies  contradictory
+[86]	14	Mate  Palfy	context_added	
+[87]	14	Jessica  Polka	context_nounchange_1	makes  clear  this  is  in  the  African  context
+[88]	14	Jessica  Polka	results_nounchange_1+	improves  clarity,  might  consider  scoring  this  0,  original  text  might  mean  severity  of  symptoms
+[89]	15	Mate  Palfy	results_statinfo_1	
+[90]	16	Jessica  Polka	context_removed_1	
+[91]	16	Dey,  Gautam	context_nounchange_1	
+[92]	16	Jessica  Polka	context_added_1+	
+[93]	16	Jessica  Polka	results_nounchange_1+	
+[94]	16	Jessica  Polka	context_removed_1	
+[95]	16	Mate  Palfy	results_added_1+	
+[96]	16	Jessica  Polka		not  scoring  -changed  from  “no  connectivity  changes  between  groups”  to  “connectivity  of  primary  groups  did  not  differ”
+[97]	16	Dey,  Gautam		confusing,  because  significant  text  changes,  but  no  apparent  changes  in  conclusions  or  results
+[98]	16	jonathon coates	results_stat-_1	
+[99]	16	Mate  Palfy	context_removed_1	this  is  referring  to  method  while  stating  the  result
+[100]	16	jonathon coates	results_stat-_1	
+[101]	16	Jessica  Polka	results_added_1+	
+[102]	17	Jessica  Polka	context_stat-_1-	causality  not  implied
+[103]	17	Jessica  Polka	results_stat-_1-	increased  ->  associated  with  a  higher
+[104]	17	Dey,  Gautam	context_added_1+	
+[105]	17	jonathon coates	results_stat+_1+	
+[106]	17	Jessica  Polka	results_stat-_1-	causality
+[107]	17	Jessica  Polka	results_stat-_1-	causality
+[108]	17	Jessica  Polka	results_stat-_1-	causality
+[109]	17	Jessica  Polka	results_stat-_1-	causality
+[110]	19	Jessica  Polka	context  removed_1	
+[111]	19	Jessica  Polka	context_added_1	
+[112]	19	Jessica  Polka	context_removed_1	reconciled
+[113]	19	Jessica  Polka	context_added_1	
+[114]	19	Jessica  Polka	context_added_1	
+[115]	19	Jessica  Polka	context_removed_1	
+[116]	19	Jessica  Polka	context_added_1	
+[117]	19	Jessica  Polka	context_added_1	
+[118]	19	Jessica  Polka	context_added_1	
+[119]	19	Jessica  Polka	countext_nounchange_1-	less  comprehensive
+[120]	19	Mate  Palfy	conclusions_added_1+	
+[121]	19	Jessica  Polka	context_added_1	elaboration  of  ‘drug  therapy’
+[122]	19	Jessica  Polka	context_removed_1	
+[123]	19	Jessica  Polka	context_nounchange_1	
+[124]	20	Jessica  Polka	conclusions_stat+_1+	more  prescriptive  verb
+[125]	20	Dey,  Gautam	conclusion_added_1+	
+[126]	21	Jessica  Polka		rearrangement
+[127]	21	Jessica  Polka		rearrangement
+[128]	24	Dey,  Gautam	context_removed_1	
+[129]	24	Jessica  Polka	conclusion_nounchange_1-	rearrangement  with  sentence  below:  neuromuscular  disease->  CdLS
+[130]	24	Jessica  Polka	conclusion_removed_1+	concern  removed
+[131]	24	Jessica  Polka	conclusion_effect+_1+	rearrangement:  boost->highly  suitable
+[132]	24	Jessica  Polka	context_added_1	
+[133]	24	Mate  Palfy	results_statinfo_1+	
+[134]	24	Mate  Palfy	results_statinfo_1+	
+[135]	24	Jessica  Polka	results_nounchange_1	
+[136]	24	Jessica  Polka		rearrangement
+[137]	24	Jessica  Polka	conclusions_removed_1	
+[138]	24	jonathon coates	results_effect-_1	
+[139]	24	Dey,  Gautam	conclusions_added_1+	
+[140]	24	Dey,  Gautam	results_removed_1	
+[141]	24	Mate  Palfy	conclusions_added_1+	
+[142]	24	Dey,  Gautam	results_added_1+	
+[143]	24	jonathon coates	conclusion_effect+_1+	
+[144]	26	Jessica  Polka	context_effect-_1	
+[145]	26	Mate  Palfy	context_removed_1	
+[146]	26	Jessica  Polka		definition  of  C-statistics
+[147]	26	Jessica  Polka	results_stat+_1+	
+[148]	26	Jessica  Polka	resuls_effect+_1+	
+[149]	26	Jessica  Polka	results_effect-_1	
+[150]	26	Mate  Palfy	results_effect-_1	
+[151]	26	jonathon coates	results_stat-_1	
+[152]	26	jonathon coates	results_stat-_1	
+[153]	26	Jessica  Polka	conclusions_added_2	reconciled
+[154]	28	Jessica  Polka	context_added_1	
+[155]	28	Jessica  Polka	context_removed_1	
+[156]	29	Mate  Palfy	results_statinfo_1	
+[157]	29	Mate  Palfy	results_statinfo_1	
+[158]	29	Mate  Palfy	results_statinfo_1	
+[159]	29	Jessica  Polka	results_statinfo_1	
+[160]	29	Jessica  Polka	results_statinfo_1	
+[161]	30	Jessica  Polka	context_added_1	
+[162]	30	Jessica  Polka		this  section  was  repetitive
+[163]	30	jonathon coates	conclusion_removed_1	reconciled
+[164]	31	Mate  Palfy	results_nounchange_1	
+[165]	32	Jessica  Polka	context_nouchange_1	
+[166]	34	Dey,  Gautam	context_added_1+	
+[167]	34	Jessica  Polka	context_stat-_1	
+[168]	34	Dey,  Gautam	results_stat+_1+	
+[169]	34	Mate  Palfy	results_stat-_1	
+[170]	35	Jessica  Polka	context_nounchange_1	
+[171]	35	jonathon coates	results_added_1+	
+[172]	36	Dey,  Gautam	context_added_1+	
+[173]	37	Dey,  Gautam	results_stat+_1+	
+[174]	37	Dey,  Gautam	results_stat+_1+	
+[175]	38	Jessica  Polka	results_effect+_1+	
+[176]	38	Jessica  Polka	results_stat-_1	
+[177]	38	Mate  Palfy	results_added_1+	specifies  ‘other’
+[178]	39	Jessica  Polka	context_removed_1	
+[179]	39	Jessica  Polka	context_removed_1	
+[180]	39	Jessica  Polka	result_effect-_1	since  threshold  is  increasing
+[181]	39	Jessica  Polka	context_removed_1	
+[182]	39	Jessica  Polka	context_removed_1	
+[183]	39	Jessica  Polka	context_removed_1	
+[184]	39	Jessica  Polka	context_removed_1	
+[185]	39	Jessica  Polka	context_stat+_1	
+[186]	39	jonathon coates	results_stat+_1+	
+[187]	39	Dey,  Gautam	results_added_1+	
+[188]	39	jonathon coates	results_stat+_1+	
+[189]	39	Mate  Palfy	results_stat-_1	
+[190]	39	Jessica  Polka	results_nounchange_1	adolescent  motherhood  ->  under  20
+[191]	39	Jessica  Polka	results_effect+_1+	see  removed  text  below
+[192]	39	Jessica  Polka	results_removed_1	reconciled
+[193]	39	Jessica  Polka	results_removed_1	reconciled
+[194]	39	Jessica  Polka	results_added_1+	
+[195]	39	Jessica  Polka	results_statinfo_1+	
+[196]	39	Jessica  Polka	results_effect-_1-	from  OR  0.28
+[197]	39	jonathon coates	results_stat+_1+	
+[198]	39	jonathon coates	results_stat+_1+	
+[199]	39	Dey,  Gautam	results_removed_1	
+[200]	39	Mate  Palfy	conclusion_added_1+	
+[201]	39	Jessica  Polka	results_added_1+	this  factor  is  rare
+[202]	39	Mate  Palfy	conclusions_added_1+	
+[203]	39	Jessica  Polka	conclusions_removed_1-	less  prescriptive
+[204]	40	Mate  Palfy	results_stat+_1+	
+[205]	40	Mate  Palfy	results_added_1+	
+[206]	40	Jessica  Polka	results_statinfo_1	
+[207]	40	Jessica  Polka	results_added_1+	
+[208]	40	Mate  Palfy	reslts_effect-_1	
+[209]	40	Mate  Palfy	results_added_1+	
+[210]	40	Jessica  Polka	results_added_1+	
+[211]	40	Jessica  Polka	results_statinfo_1	
+[212]	40	Dey,  Gautam	results_statinfo_1	reporting  of  decimal  places  adjusted
+[213]	40	Mate  Palfy	results_added_1+	
+[214]	40	Mate  Palfy	results_added_statinfo_1+	
+[215]	40	jonathon coates		stats  have  just  been  rounded
+[216]	40	Jessica  Polka	results_stat+_1+	because  CI  are  getting  smaller
+[217]	40	jonathon coates	results_stat+_1+	
+[218]	40	jonathon coates	results_stat-_1	
+[219]	40	Jessica  Polka	results_effect-_1	
+[220]	40	Jessica  Polka	results_stat+_1+	
+[221]	40	Jessica  Polka	results_effect-_1	
+[222]	40	Jessica  Polka	results_stat+_1+	
+[223]	41	jonathon coates	context_stat+_1+	
+[224]	41	jonathon coates	context_stat+_1+	
+[225]	41	Mate  Palfy	results_statinfo_1	
+[226]	41	Jessica  Polka	results_statinfo_1+	
+[227]	41	jonathon coates	results_added_1+	
+[228]	41	Jessica  Polka	results_statinfo_1+	
+[229]	41	jonathon coates	context_stat+_1+	
+[230]	41	jonathon coates	context_stat+_1+	
+[231]	41	jonathon coates	results_added_1+	
+[232]	41	Jessica  Polka	results_effect-_1	
+[233]	41	Jessica  Polka	results_effect-_1	
+[234]	41	Jessica  Polka	results_effect-_1	
+[235]	41	Jessica  Polka	results_effect_1	
+[236]	41	jonathon coates	conclusion_stat+_1+	
+[237]	42	Jessica  Polka	context_nounchange_1	
+[238]	42	Jessica  Polka	context_nounchange_1	since  numbers  reported  as  a  ratio,  this  doesn’t  change  main  conclusion  of  the  paper
+[239]	45	Jessica  Polka	context_added_1	
+[240]	46	Dey,  Gautam	results_statinfo_1+	
+[241]	48	Dey,  Gautam	context_nounchange_1	
+[242]	48	Jessica  Polka	results_stat-_1-	result  is  presented  more  neutrally
+[243]	48	Mate  Palfy	results_statinfo_1	
+[244]	48	Dey,  Gautam	results_statinfo_1+	
+[245]	48	Mate  Palfy	results_statinfo_1	
+[246]	48	Mate  Palfy	results_statinfo_1	
+[247]	48	Jessica  Polka	results_statinfo_1	
+[248]	48	Mate  Palfy	conclusions_added_2	
+[249]	48	jonathon coates	conclusion_added_2	
+[250]	48	Mate  Palfy	conclusions_nounchange_1	
+[251]	48	Jessica  Polka	conclusion_nounchange_1-	specific  to  cancer  patients,  not  a  general  finding
+[252]	49	Dey,  Gautam	context_removed_1	
+[253]	49	jonathon coates	context_removed_1	
+[254]	49	Jessica  Polka	context_nounchange_1	
+[255]	49	Jessica  Polka	context_removed_1	
+[256]	49	Jessica  Polka	context_removed_1	
+[257]	49	Mate  Palfy	conclusions_nounchange_1+	gives  a  specific  example  of  a  radiation  induced  complication
+[258]	49	Jessica  Polka	conclusion_nounchange_1	
+[259]	56	Jessica  Polka	context_added_1	
+[260]	56	Jessica  Polka	context_added_1	
+[261]	56	Jessica  Polka	context_added_1	
+[262]	56	Jessica  Polka	context_added_1	
+[263]	56	Jessica  Polka	context_nounchange_1	
+[264]	56	Jessica  Polka	context_nounchange_1	
+[265]	56	Mate  Palfy	context_statinfo_1+	
+[266]	56	Jessica  Polka	results_added_1	reconciled  –  does  not  change  main  conclusion
+[267]	56	Mate  Palfy	results_statinfo_1+	
+[268]	56	Jessica  Polka	results_nounchange_1	
+[269]	56	Jessica  Polka	conclusions_nounchange_1	
+[270]	56	Mate  Palfy	conclusions_nounchange_1+	
+[271]	59	Jessica  Polka		rearrangement
+[272]	59	Jessica  Polka	context_removed_1	
+[273]	59	Jessica  Polka	context_removed_1	
+[274]	59	Jessica  Polka	context_removed_1	
+[275]	59	Jessica  Polka	context_added_1	
+[276]	59	Mate  Palfy	results_nounchange_1	
+[277]	59	jonathon coates	results_added_1+	
+[278]	59	jonathon coates	results_added_1+	
+[279]	59	Mate  Palfy	conclusion_removed_1	
+[280]	60	Jessica  Polka	context_nounchange_1	
+[281]	61	Dey,  Gautam		no  significant  changes
+[282]	61	Jessica  Polka		html  encoding
+[283]	62	Dey,  Gautam		many  changes,  to  make  the  abstract  more  quantitative  in  on  several  fronts
+[284]	62	Jessica  Polka	context_nounchange_1+	
+[285]	62	Jessica  Polka	context_added_1	
+[286]	62	Jessica  Polka	results_stat-_1	
+[287]	62	Jessica  Polka	results_stat_1+	
+[288]	62	Dey,  Gautam	results_added_1	
+[289]	62	Mate  Palfy	results_effect-_1	
+[290]	62	jonathon coates	results_stat-_1	
+[291]	62	Jessica  Polka	results_statinfo_1	
+[292]	62	Jessica  Polka	results_statinfo_1+	
+[293]	62	Jessica  Polka	results_nounchange_1	lowest  coverage  vaccines  has  changed
+[294]	62	Jessica  Polka	results_statinfo_1+	
+[295]	62	Mate  Palfy	results_statinfo_1+	
+[296]	62	Jessica  Polka		repeated  below
+[297]	62	Jessica  Polka		repeated  below
+[298]	62	Jessica  Polka		rephrased  as  female
+[299]	62	Dey,  Gautam	results_added_2	
+[300]	62	Jessica  Polka	result_nounchange_1+	urban->specific  areas
+[301]	62	Mate  Palfy	results_added_1+	
+[302]	62	Mate  Palfy	context_removed_1	
+[303]	62	jonathon coates	results_stat-_1	
+[304]	62	Jessica  Polka	result_added_1+	effect  size  information  added
+[305]	62	Mate  Palfy	results_effectreverse_1	reconciled
+[306]	62	jonathon coates	results_added_1+	
+[307]	62	Jessica  Polka	conclusion_removed_1	
+[308]	62	Jessica  Polka	conclusion_nounchange_1	
+[309]	63	Dey,  Gautam		no  significant  changes
+[310]	63	Jessica  Polka		no  change
+[311]	64	Dey,  Gautam		no  signficant  changes
+[312]	65	Jessica  Polka	context_added_1	
+[313]	65	Dey,  Gautam	context_removed_1	
+[314]	65	Jessica  Polka	context_removed_1	
+[315]	65	Jessica  Polka	context_added_1	
+[316]	65	Jessica  Polka		rearranged
+[317]	65	Jessica  Polka	results_nounchange_1	
+[318]	66	Mate  Palfy	conclusions_nounchange_1	reconciled,  confusing  for  readers,  implies  reversal
+[319]	67	Jessica  Polka	context_added_1	
+[320]	67	Jessica  Polka	context_added_1	
+[321]	67	Jessica  Polka	context_removed_1	
+[322]	67	Jessica  Polka		where  else?
+[323]	67	Mate  Palfy	conclusions_nounchange_1	
+[324]	67	Jessica  Polka	conclusions_removed_1	
+[325]	68	jonathon coates	conclusion_effect+_1+	
+[326]	69	Jessica  Polka	conclusions_removed_1-	these  are  mostly  repeated  above,  but  removed  section  is  firmer  about  valinomycin  as  a  potential  therapeutic
+[327]	70	Jessica  Polka	context_added_1	references  added
+[328]	70	Jessica  Polka	context_effect+_1	
+[329]	70	Jessica  Polka	context_added_1	references  added
+[330]	70	jonathon coates	context_effect+_1+	
+[331]	70	Jessica  Polka	context_effect+_1	
+[332]	70	jonathon coates	context_effect+_1+	
+[333]	70	Mate  Palfy	results_effect+_1	
+[334]	70	Jessica  Polka	resuls_nounchange_1	
+[335]	70	Jessica  Polka	conclusion_stat-_1	
+[336]	71	Dey,  Gautam		no  significant  changes
+[337]	72	Jessica  Polka	context_removed_1	
+[338]	72	Jessica  Polka		rearrangement
+[339]	72	Jessica  Polka	context_removed_1	
+[340]	72	Jessica  Polka	context_removed_1	
+[341]	72	Dey,  Gautam	context_removed_1	
+[342]	72	jonathon coates	context_removed_1	
+[343]	72	jonathon coates	results_added_1+	
+[344]	72	jonathon coates	results_stat+_1+	
+[345]	72	jonathon coates	results_stat+_1+	
+[346]	72	Mate  Palfy	results_added_1+	
+[347]	72	Jessica  Polka	conclusions_added_1+	
+[348]	73	Jessica  Polka	context_effect+_1	
+[349]	73	Jessica  Polka	conclusion_stat-_1	
+[350]	73	Dey,  Gautam	results_effect-_1	
+[351]	73	Jessica  Polka	context_nounchange_1	
+[352]	73	Mate  Palfy	results_effect-_1	
+[353]	73	Mate  Palfy	results_stat+_1+	
+[354]	73	Mate  Palfy	results_effect-_1	
+[355]	73	Mate  Palfy	results_stat+_1+	
+[356]	73	Jessica  Polka	results_stat+_1+	
+[357]	73	Jessica  Polka	results_added_1	reconciled,  obvious  statement
+[358]	73	Dey,  Gautam	results_effect-_1	reconciled,  number  changes
+[359]	74	Dey,  Gautam		no  significant  changes
+[360]	74	Jessica  Polka	conclusion_stat+_1	
+[361]	74	Jessica  Polka		sum  of  numbers  that  follow
+[362]	75	Mate  Palfy	context_effect_1+	
+[363]	75	jonathon coates	context_effect+_1+	
+[364]	75	Jessica  Polka	context_nounchange_1	
+[365]	75	Jessica  Polka	context_nounchange_1	
+[366]	75	Mate  Palfy	context_nounchange_1	
+[367]	75	Jessica  Polka	context_nounchange_1	
+[368]	75	Dey,  Gautam	results_effect+_1	
+[369]	75	Dey,  Gautam	results_statinfo_1	
+[370]	75	Jessica  Polka	results_effect-_1-	marking  this  as  a  decrease  in  effect  since  the  authors  argue  that  surveillance  reduces  transmission  rate,  and  in  revised  abstract  it  isn’t  reduced  as  much
+[371]	75	Jessica  Polka	results_statinfo_1+	
+[372]	76	Mate  Palfy	context_nounchange_1	
+[373]	76	Jessica  Polka	context_removed_1	
+[374]	76	Jessica  Polka	context_removed_1+	original  text  suggests  coverage  is  not  complete
+[375]	76	Jessica  Polka	context_stat-_1	
+[376]	76	jonathon coates	results_effect+_1+	
+[377]	76	Jessica  Polka	result_nounchange_1	median  ->  mean
+[378]	76	Dey,  Gautam	results_statinfo_1	
+[379]	76	Jessica  Polka	result_nounchange_1	
+[380]	76	Jessica  Polka	result_stat-_1	
+[381]	76	Jessica  Polka	result_statinfo_1+	
+[382]	76	Dey,  Gautam	results_added_2	
+[383]	76	Jessica  Polka	conclusion_effect+_2	recommendation  length  changed  substantially
+[384]	76	Mate  Palfy	results_effect-_1	
+[385]	76	jonathon coates	results_added_1+	
+[386]	77	Dey,  Gautam		no  significant  changes
+[387]	79	Jessica  Polka	context_nounchange_1	
+[388]	79	Jessica  Polka	context_removed_1	it  seems  that  COVID  abstracts  are  often  edited  to  reflect  rapidly  changing  knowledge  and  conditions
+[389]	79	Dey,  Gautam	context_effect+_1	
+[390]	79	Jessica  Polka	context_added_1	
+[391]	79	Mate  Palfy	results_effect+_1	
+[392]	79	Dey,  Gautam	results_statinfo_1	
+[393]	79	Jessica  Polka	result_effect+_1	
+[394]	79	Jessica  Polka	conclusions_stat-_1	
+[395]	80	Jessica  Polka	context_effect+_1	
+[396]	80	Jessica  Polka	context_effect+_1	
+[397]	80	Mate  Palfy	conclusions_stat-_1	
+[398]	80	Jessica  Polka	concusions_stat-_1	
+[399]	80	Mate  Palfy	conclusions_stat-_1	
+[400]	81	jonathon coates	context_effect+_1+	
+[401]	81	Jessica  Polka	context_nounchange_1	
+[402]	81	Jessica  Polka	context_stat+_1	
+[403]	81	Mate  Palfy	context_added_1	
+[404]	81	Jessica  Polka	context_added_1	
+[405]	81	Jessica  Polka	context_nounchange_1	
+[406]	81	jonathon coates	results_nounchange_1	
+[407]	81	Jessica  Polka	context_added_1	
+[408]	81	Jessica  Polka	context_added_1	
+[409]	81	Dey,  Gautam	context_added_1+	
+[410]	81	Jessica  Polka	results_nounchange_1	
+[411]	81	Jessica  Polka	results_nounchange_2	fluctuated  ->  declined
+[412]	81	jonathon coates	results_removed_1	
+[413]	81	jonathon coates	results_stat+_1+	
+[414]	81	jonathon coates	results_stat+_1+	
+[415]	81	jonathon coates	results_added_1+	
+[416]	81	Dey,  Gautam	context_added_2	
+[417]	81	Mate  Palfy	results_effect-_1	
+[418]	81	Jessica  Polka	results_removed_1	
+[419]	81	Jessica  Polka	results_added_1	
+[420]	81	Jessica  Polka	results_removed_1	increase  before  travel  restriction
+[421]	81	Mate  Palfy	conclusions_nounchange_2	from  concluding  cases  increased  until  travel  restrictions  to  concluding  that  they  decreased  after  travel  restrictions
+[422]	81	Jessica  Polka	conclusion_nounchange_1	
+[423]	81	Mate  Palfy	conclusions_nounchange_1	
+[424]	82	Dey,  Gautam		no  significant  changes
+[425]	82	Jessica  Polka	context_removed_1	tool  availability
+[426]	82	Jessica  Polka	conclusions_added_1+	though  this  is  likely  implied  already
+[427]	83	jonathon coates	results_added_1+	
+[428]	83	Jessica  Polka	results_stat+_1+	
+[429]	83	Jessica  Polka	result_added_1+	
+[430]	83	Dey,  Gautam	results_effect+_1	reconciled
+[431]	83	Jessica  Polka	result_effect+_1+	
+[432]	83	Jessica  Polka	results_stat+_1+	
+[433]	83	Jessica  Polka	result_added_1+	how  many  hypervariable  regions
+[434]	83	Mate  Palfy	results_added_1	
+[435]	83	Jessica  Polka	conclusions_stat-_1-	to  be  considered  sounds  less  certain  than  previous  text
+[436]	83	Jessica  Polka	context_added_1+	
+[437]	84	Dey,  Gautam	context_added_1+	
+[438]	84	Jessica  Polka	results_statinfo_1	
+[439]	84	Jessica  Polka	results_nounchange_1	
+[440]	85	Jessica  Polka		no  change
+[441]	86	Jessica  Polka	context_stat+_1	implying  that  there  is  a  need  for  this  work
+[442]	86	Jessica  Polka	context_nounchange_1	the  hospitals  are  in  a  smaller  number  of  provinces
+[443]	86	Mate  Palfy	context_effect-_1	
+[444]	86	Jessica  Polka	context_added_1	
+[445]	86	Jessica  Polka	context_added_1	
+[446]	86	jonathon coates	context_added_1+	
+[447]	86	jonathon coates	results_added_1+	
+[448]	86	Mate  Palfy	results_effect-_1	
+[449]	86	Jessica  Polka	context_added_1	
+[450]	86	Jessica  Polka	result_effect+_1	from  71.8  to  72.3
+[451]	86	TOBEADDED	result_added_1+	
+[452]	86	Jessica  Polka	result_effect+_1+	
+[453]	86	Jessica  Polka	result_effect+_1+	
+[454]	86	Jessica  Polka	result_added_1+	
+[455]	86	Mate  Palfy	results_effect+_1	
+[456]	86	Dey,  Gautam	results_statinfo_1+	
+[457]	86	Mate  Palfy	results_nounchange_1	
+[458]	86	jonathon coates	results_stat-_1	
+[459]	86	Jessica  Polka	result_effect+_1+	
+[460]	86	jonathon coates	results_added_1+	
+[461]	86	jonathon coates	results_effect+_1+	
+[462]	86	Mate  Palfy	conclusions_added_1	
+[463]	86	Jessica  Polka	conclusions_added_2	
+[464]	86	jonathon coates	conclusion_added_2	
+[465]	86	Mate  Palfy	results_removed_2	
+[466]	86	Jessica  Polka	conclusions_removed_2	revised  abstract  does  not  talk  about  predicting  outcomes
+[467]	87	Dey,  Gautam		no  significant  changes
+[468]	87	Jessica  Polka	context_added_1	
+[469]	88	Jessica  Polka	context_added_1	
+[470]	88	Jessica  Polka	context_added_1	
+[471]	88	Mate  Palfy	context_added_2	
+[472]	88	Mate  Palfy	context_added_2	
+[473]	88	Jessica  Polka	context_added_1	
+[474]	88	Jessica  Polka	results_removed_1	
+[475]	88	Jessica  Polka	results_removed_1	
+[476]	88	Jessica  Polka	results_removed_1	
+[477]	88	Jessica  Polka	results_removed_1	
+[478]	88	Jessica  Polka	conclusions_removed_1	
+[479]	88	Jessica  Polka	context_added_1+	
+[480]	88	Jessica  Polka	context_added_1+	methods
+[481]	88	Mate  Palfy	results/context_added  _2	change  from  scenario  where  outbreak  occurred  in  specific  areas  to  scenario  where  mask  wearing  policies  enforced  in  specific  areas
+[482]	88	Jessica  Polka	results_added_1+	
+[483]	88	Mate  Palfy	results_effectreverse_2	preprint  abstract  makes  no  mention  of  end  of  mask  shortage
+[484]	88	Dey,  Gautam	results_added_2	
+[485]	88	Mate  Palfy	results_added_2	
+[486]	88	Mate  Palfy	context_added_2	
+[487]	88	Jessica  Polka	results_added_1+	
+[488]	88	Mate  Palfy	conclusions_added_2	
+[489]	88	Mate  Palfy	conclusions_added_2	
+[490]	88	Mate  Palfy	conclusions_added_2	
+[491]	88	Mate  Palfy	conclusions_added_2	
+[492]	88	Mate  Palfy	conclusions_added_2	
+[493]	89	Jessica  Polka	context_removed_1	
+[494]	89	Jessica  Polka		reorganization
+[495]	89	Jessica  Polka	context_added_1+	
+[496]	89	Jessica  Polka		see  reorganization  above
+[497]	89	Jessica  Polka		rearranged  from  below
+[498]	89	Mate  Palfy	context_added	
+[499]	89	Jessica  Polka	context_nounchange_1	
+[500]	89	Jessica  Polka	context_nounchange_1	
+[501]	89	Mate  Palfy	context_added_1	
+[502]	89	Mate  Palfy	context_removed_1	
+[503]	89	Mate  Palfy	results_added_1+	
+[504]	89	Mate  Palfy	results_added_1+	
+[505]	89	Mate  Palfy	results_effect+_1	
+[506]	89	Jessica  Polka	results_effect+_1+	
+[507]	89	Jessica  Polka	resutls_effect-_1+	
+[508]	89	Jessica  Polka	results_stat-_1	
+[509]	89	Jessica  Polka	results_effect+_1	
+[510]	89	Mate  Palfy	results_effect-_1	
+[511]	89	jonathon coates	results_effect-_1	
+[512]	89	Mate  Palfy	results_nounchange_1	
+[513]	89	Mate  Palfy	conclusion_added_1	
+[514]	89	Jessica  Polka	conclusions_added_2	
+[515]	89	Jessica  Polka	conclusions_added_2	
+[516]	90	Dey,  Gautam		no  significant  changes
+[517R516]	90	Jessica  Polka		
+[518]	90	Jessica  Polka	context_stat-_1	
+[519]	90	Jessica  Polka	results_stat-_1	
+[520]	90	Mate  Palfy	results_stat-_1	
+[521]	91	Jessica  Polka	context_effect+_1	
+[522]	91	Jessica  Polka	context_effect+_1	
+[523]	91	Mate  Palfy	context_removed_1	
+[524]	91	Mate  Palfy	context_added_1+	
+[525]	91	jonathon coates	results_effect-_1	
+[526]	91	jonathon coates	results_effect+_1+	
+[527]	91	jonathon coates	results_removed_1	
+[528]	92	Jessica  Polka	context_added_1	
+[529]	92	Mate  Palfy	context_stat-_1	
+[530]	92	Mate  Palfy	results_stat-_1	
+[531]	92	Mate  Palfy	conclusions_nounchange_1	
+[532]	94	Dey,  Gautam	context_removed_1	
+[533]	94	Mate  Palfy	context_removed	
+[534]	94	Mate  Palfy		rearrangement
+[535]	94	Jessica  Polka	context_removed_1-	lack  of  association  repeated  from  below
+[536]	94	Jessica  Polka	results_removed_  1+	scoring  as  positive  because  this  is  the  removal  of  a  non-significant  result
+[537]	95	Jessica  Polka	result_added_1+	detail  added
+[538]	95	Jessica  Polka	result_added_1+	detail  added
+[539]	95	Jessica  Polka	result_added_1+	detail  added
+[540]	95	Mate  Palfy	results_added_1+	
+[541]	95	jonathon coates	results_statinfo_1+	
+[542]	95	Dey,  Gautam	results_added_1	
+[543]	95	Jessica  Polka	conclusion_added_2	
+[544]	96	Dey,  Gautam		no  significant  changes
+[545]	97	Jessica  Polka	context_effect+_1	local  ->  global  effect
+[546]	97	Jessica  Polka	context_removed_1	
+[547]	97	Jessica  Polka	context_nounchange_1	
+[548]	97	Jessica  Polka	conclusions_stat-_1+	extensively  ->  systematically
+[549]	97	Jessica  Polka	context_removed_1	
+[550]	97	Jessica  Polka	results_stat-_1	
+[551]	97	Jessica  Polka	results_stat-_1-	significance  statement  removed
+[552]	97	Mate  Palfy	results_nounchange_1	
+[553]	97	Jessica  Polka	results_stat+_1	now  claim  to  offer  an  explanation  rather  than  simply  note  consistency
+[554]	97	Jessica  Polka	results_stat-_1	
+[555]	97	Jessica  Polka	results_stat+_1+	
+[556]	97	Mate  Palfy	conclusions_effect+_1	
+[557]	97	Jessica  Polka	context_stat+_1	
+[558]	97	Jessica  Polka	context_removed_1	
+[559]	97	Jessica  Polka	results_stat-_1	
+[560]	97	Jessica  Polka	result_effect-_1	
+[561]	97	Mate  Palfy	results_removed_1	
+[562]	97	Jessica  Polka	conclusions_stat-_1-	Present  findings  are  ->  findings  would:  now  about  later  confirmatory  studies
+[563]	98	Jessica  Polka	results_stat-_1-	analyze  ->  estimate
+[564]	98	Mate  Palfy	results_removed_1	
+[565]	98	jonathon coates	results_stat+_1+	
+[566]	99	Jessica  Polka	context_effect+_1	
+[567]	99	Jessica  Polka	context_effect+_1	
+[568]	99	Jessica  Polka	context_removed_1	
+[569]	99	Mate  Palfy	context_removed_1	
+[570]	99	Mate  Palfy	result_removed_2	reconciled
+[571]	100	Jessica  Polka	result_nounchange_1-	no  longer  claiming  there  were  never  any  symptoms
+[572]	101	Mate  Palfy	context_added_1	
+[573]	101	Mate  Palfy	context_added_1	
+[574]	101	jonathon coates	results_effect-_1	
+[575]	101	jonathon coates	results_statinfo_1+	
+[576]	102	Jessica  Polka	context_added_1	
+[577]	102	jonathon coates	context_removed_1+	
+[578]	102	Dey,  Gautam	context_added_1	
+[579]	104	jonathon coates	context_added_1+	
+[580]	104	jonathon coates	context_added_1+	
+[581]	104	Dey,  Gautam	results_nounchange_1	
+[582]	104	jonathon coates	results_removed_1	
+[583]	104	Mate  Palfy	conclusions_nounchange_1	
+[584]	104	jonathon coates	conclusion_removed_1+	strengthens  as  I  feel  this  is  a  strange  assertion  to  make  based  on  the  rest  of  the  abstract
+[585]	105	Dey,  Gautam	results_added_1+	
+[586]	105	Mate  Palfy	results_removed_1	
+[587]	105	jonathon coates	results_added_1+	
+[588]	105	Mate  Palfy	results_added_1+	
+[589]	105	Dey,  Gautam	conclusion_nounchange_1	
+[590]	106	Mate  Palfy	context_removed_1	
+[596]	106	jonathon coates	results_statinfo_1	
+[597]	106	Jessica  Polka	results_nounchange_1	assume  this  is  translation
+[598]	106	jonathon coates	results_statinfo_1	
+[599]	106	jonathon coates	results_removed_1	
+[600]	106	jonathon coates	results_effect-_1	
+[601]	106	jonathon coates	results_effect-_1	
+[602]	106	Mate  Palfy	results_added_1	
+[603]	106	Dey,  Gautam	results_stat-_1	
+[604]	106	jonathon coates	results_statinfo_1+	
+[605]	106	Mate  Palfy	results_statinfo_1+	
+[606]	106	Jessica  Polka	results_added_1+	
+[607]	106	Jessica  Polka	result_statinfo_1+	
+[608]	106	Jessica  Polka	conclusion_added_1+	
+[609]	106	Jessica  Polka	conclusions_added_1+	
+[610]	106	Jessica  Polka	conclusion_added_1+	
+[611]	106	Dey,  Gautam	conclusion_nounchange_1	
+[612]	107	jonathon coates	context_added_1+	
+[613]	107	Jessica  Polka	context_added_1	
+[614]	108	jonathon coates	results_effect-_1	
+[615]	108	Jessica  Polka	result_effect-_1	
+[616]	108	Mate  Palfy	results_effect-_1	
+[617]	108	Jessica  Polka	result_stat-_1	
+[618]	108	Jessica  Polka	conclusions_stat-_1	
+[619]	109	Dey,  Gautam	context_added_1	
+[620]	109	Jessica  Polka	results_effect-_1	
+[621]	109	Dey,  Gautam	context_added_1+	
+[622]	109	Jessica  Polka	results_effect+_1+	specific  period  in  March
+[623]	109	Dey,  Gautam	conclusion_effect-_1	
+[624]	109	jonathon coates	results_added_1	
+[625]	109	Jessica  Polka	context_added_1	
+[626]	110	jonathon coates	context_effect+_1+	
+[627]	110	jonathon coates	context_effect+_1+	
+[628]	110	Jessica  Polka	results_added_1+	
+[629]	110	Mate  Palfy	results_added_1+	
+[630]	110	Mate  Palfy	results_added_1+	
+[631]	110	Dey,  Gautam	results_added_2	reconciled,  sex  difference  added
+[632]	110	Dey,  Gautam	conclusion_added_1	
+[633]	110	Jessica  Polka	results_added_2+	
+[634]	110	Jessica  Polka	results_added_1+	
+[635]	111	jonathon coates	context_effect+_1+	
+[636]	111	Mate  Palfy	conclusions_added_2	reconciled,  potential  for  dysfunction/abortion  added
+[637]	111	Jessica  Polka	conclusions_stat-_1	
+[638]	112	Dey,  Gautam	context_added_1	
+[639]	112	Mate  Palfy	results_removed_2	reconciled,  nurses  split  into  two  groups,  extensive  changes  in  statistics
+[640]	112	Mate  Palfy	results_removed_1	
+[641]	112	jonathon coates	results_statinfo_1	
+[642]	112	jonathon coates	results_statinfo_1	
+[643]	112	Jessica  Polka	result_removed_1	
+[644]	113	Dey,  Gautam	context_added_1	
+[645]	113	Mate  Palfy	results_removed_1	
+[646]	113	Jessica  Polka	context_removed_1	detail?
+[647]	113	Jessica  Polka	results_stat+_1-	“modestly”  removed
+[648]	113	Mate  Palfy	results_removed_1	
+[649]	113	Dey,  Gautam	conclusion_added_1	
+[650]	114	Mate  Palfy	results_added_1+	
+[651]	114	jonathon coates	results_added_1+	
+[652]	116	Jessica  Polka	results_stat-_1-	this  sentence  seems  to  have  been  edited  for  clarity,  and  this  qualification  seems  like  the  only  significant  change
+[653]	119	Jessica  Polka	results_effect+_1	doubling
+[654]	119	Jessica  Polka	results_effect-_1	half
+[655]	119	jonathon coates	results_stat-_1	
+[656]	119	Jessica  Polka	conclusions_effect+_1	
+[657]	119	Mate  Palfy	results_effect+_1	
+[658]	120	jonathon coates	conclusion_added_1	reconciled,  possible  journal  requirement
+[659]	121	Dey,  Gautam	context_added_1	
+[660]	121	jonathon coates	results_removed_1	
+[661]	122	Jessica  Polka	context_stat-_1	
+[662]	122	Jessica  Polka	context_added_1	
+[663]	122	Dey,  Gautam	context_added_1	
+[664]	122	Jessica  Polka	result_nounchange_1+	now  suggests  intention  to  determine  cutoff  value
+[665]	122	jonathon coates	results_statinfo_1+	
+[666]	122	jonathon coates	results_statinfo_1+	
+[667]	122	jonathon coates	results_added_1+	
+[668]	122	Jessica  Polka	conclusion_stat-_1	
+[669]	123	Jessica  Polka		main  conclusion
+[670]	123	Jessica  Polka		conclusion  about  contact  tracing
+[671]	123	Jessica  Polka	results_added_1+	
+[672]	123	Mate  Palfy	results_added_1+	
+[673]	123	Jessica  Polka	context_added_1+	
+[674]	123	Mate  Palfy	results_added_1+	
+[675]	123	Jessica  Polka	results_added_1+	
+[676]	123	Jessica  Polka	results_stat-_1	
+[677]	123	Mate  Palfy	conclusions_added_2	
+[678]	123	Jessica  Polka	context_added_1+	
+[679]	123	jonathon coates	results_added_1+	
+[680]	123	Jessica  Polka	results_added_1+	
+[681]	123	Jessica  Polka	conclusion_added_2	much  more  specific  to  mobile  phone  app
+[682]	123	Jessica  Polka	conclusions_stat-_1	
+[683]	123	Jessica  Polka	results_added_1+	
+[684]	123	Jessica  Polka	conclusion_added_2	
+[685]	123	jonathon coates	conclusion_added_2	
+[686]	124	jonathon coates	context_effect_1+	
+[687]	124	Jessica  Polka	conclusions_stat+_1+	
+[688]	125	Jessica  Polka	conclusions_stat+_1+	now  asserts  they  developed  the  assay  as  well
+[689]	125	Dey,  Gautam	results_effect+_1	
+[690]	126	jonathon coates	conclusion_removed_2	
+[691]	127	Dey,  Gautam	results_effect+_1	
+[692]	129	Jessica  Polka	context_removed_1	
+[693]	129	Jessica  Polka	conclusions_removed_1	
+[694]	129	jonathon coates	context_removed_1	
+[695]	129	jonathon coates	results_added_1+	
+[696]	130	Jessica  Polka	results_effect-_1-	constant  rather  than  decaying
+[697]	130	Dey,  Gautam	results_removed_1	
+[698]	130	Jessica  Polka	result_added_1+	
+[699]	130	Jessica  Polka	result_added_1+	
+[700]	130	Jessica  Polka	conclusion_removed_1-	reconciled
+[701]	131	jonathon coates	results_statinfo_1+	
+[702]	132	Jessica  Polka	results_removed_1	
+[703]	132	Jessica  Polka	results_remove_1	
+[704]	132	Jessica  Polka	results_stat+_1+	model  agrees  with  data
+[705]	132	jonathon coates	results_effect-_1	
+[706]	132	Jessica  Polka	conclusions_removed_2	no  longer  prescribing  actions  to  other  countries
+[707]	132	Dey,  Gautam	results_removed_2	
+[708]	132	jonathon coates	conclusion_added_1+	
+[709]	132	Jessica  Polka	results_removed_1-	timescale  removed
+[710]	132	Dey,  Gautam	conclusion_added_2	
+[711]	133	jonathon coates	context_added_1+	
+[712]	133	Jessica  Polka	results_stat-_1	
+[713]	133	jonathon coates	results_added_1+	
+[714]	133	jonathon coates	results_added_1+	
+[715]	133	jonathon coates	results_stat+_1+	
+[716]	133	Dey,  Gautam	results_removed_1	Uber  driver  biases
+[717]	133	Jessica  Polka	results_added_1+	
+[718]	133	jonathon coates	results_stat-_1	
+[719]	133	Jessica  Polka	results_added_1+	
+[720]	133	jonathon coates	results_removed_1	
+[721]	133	jonathon coates	results_stat+_1+	
+[722]	133	Jessica  Polka	result_stat-_1	
+[723]	133	Jessica  Polka	conclusion_stat+_1+	suggests  useful  in  non-covid  outbreaks
+[724]	134	jonathon coates	context_effect+_1+	
+[725]	134	Jessica  Polka	result_nounchange_1+	now  whole  protein
+[726]	134	Jessica  Polka	result_added_1+	
+[727]	134	Jessica  Polka	result_statinfo_1+	
+[728]	134	Jessica  Polka	results_added_1+	
+[729]	134	Mate  Palfy	results_added_1+	
+[730]	135	Jessica  Polka	results_remove_1	
+[731]	136	Dey,  Gautam		no  significant  changes
+[732]	137	jonathon coates	conclusions_added_1+	
+[733]	138	Dey,  Gautam	results_statinfo_1	super  odd  removal  of  one  decimal  place  just  on  one  end  of  the  range.  Might  be  that  the  range  shifted  to  3.70
+[734]	139	Dey,  Gautam	context_effect-_1	
+[735]	139	jonathon coates	results_effect+_1+	
+[736]	139	Mate  Palfy	results_removed_1	
+[737]	139	Dey,  Gautam	conclusion_effect-_1	
+[738]	140	Dey,  Gautam	results_statinfo_1	
+[739]	140	Dey,  Gautam	context_added_1	
+[740]	143	Jessica  Polka	conclusion_stat-_1	
+[741]	144	jonathon coates	results_added_1+	
+[742]	144	Jessica  Polka	conclusion_stat-_1	
+[743]	147	jonathon coates	results_added_1+	
+[744]	148	Dey,  Gautam	context_effect-_1	
+[745]	148	Dey,  Gautam	results_added_2	
+[746]	148	Dey,  Gautam	results_effect+_2	
+[747]	148	Dey,  Gautam	results_effect+_2	
+[748]	149	Dey,  Gautam	context_effect+_1	
+[749]	150	Dey,  Gautam	context_added_1	
+[750]	151	Dey,  Gautam	context_effect+_1	
+[751]	151	jonathon coates	results_effect+_1+	
+[752]	151	jonathon coates	results_effect+_1+	
+[753]	151	Jessica  Polka	results_stat+_1+	
+[754]	151	Jessica  Polka	results_effect+_1+	
+[755]	151	Jessica  Polka	results_effect+_1+	
+[756]	151	Jessica  Polka	results_nounchange_1+	
+[757]	151	Mate  Palfy	results_added_1+	
+[758]	151	Mate  Palfy	resuts_added_1+	
+[759]	151	Jessica  Polka	results_removed_1	
+[760]	151	Mate  Palfy	results_removed_1	
+[761]	151	Jessica  Polka	results_removed_1	
+[762]	151	Mate  Palfy	results_removed_1	
+[763]	151	Mate  Palfy	results_added_1	
+[764]	151	Mate  Palfy	results_added_1	
+[765]	151	Jessica  Polka	results_added_1+	
+[766]	151	jonathon coates	results_effect-_1	
+[767]	151	Jessica  Polka	results_stat-_1	
+[768]	151	jonathon coates	conclusion_removed_1	
+[769]	151	Dey,  Gautam	conclusion_added_2	
+[770]	151	jonathon coates	conclusion_added_2	
+[771]	155	jonathon coates	context_added_1+	
+[772]	155	Jessica  Polka	context_nounchange_1	
+[773]	155	Dey,  Gautam	context_added_1	
+[774]	155	jonathon coates	results_statinfo_1+	
+[775]	155	jonathon coates	results_statinfo_1+	
+[776]	155	jonathon coates	results_statinfo_1+	
+[777]	155	Jessica  Polka	conclusion_added_1+	
+[778]	160	Dey,  Gautam	context_added_1	
+[779]	160	Jessica  Polka	context_added_1+	
+[780]	160	Mate  Palfy	conclusions_stat-_1	
+[781]	161	Jessica  Polka	context_removed_1	
+[782]	161	Mate  Palfy	context_removed_1	
+[783]	161	Mate  Palfy	context_removed_1-	I  annotated  context  because  this  relates  to  methods
+[784]	161	Dey,  Gautam	results_effect+_1	21  to  25
+[785]	161	jonathon coates	results_effect+_1+	
+[786]	161	Jessica  Polka	conclusion_stat+_1+	
+[787]	162	Jessica  Polka	context_added_1+	
+[788]	164	jonathon coates	context_added_1+	
+[789]	164	Jessica  Polka	conclusion_removed_1	
+[790]	164	Jessica  Polka	conclusion_removed_1	
+[791]	165	Jessica  Polka	context_added_1+	
+[792]	165	Mate  Palfy	context_added_1+	might  not  be  necessary  to  annotate,  method  has  been  made  clearer  here
+[793]	165	Jessica  Polka	result_added_1+	
+[794]	165	jonathon coates	results_removed_1	
+[795]	165	Mate  Palfy	results_nounchange_1+	
+[796]	165	Dey,  Gautam	results_added_1	
+[797]	165	Jessica  Polka	conclusion_removed_1	
+[798]	165	Jessica  Polka	conclusion_removed_2	
+[799]	165	Jessica  Polka	conclusions_removed_2	above  it  does  say  that  “pointed  ends  are  retained”  but  it’s  not  as  clear  that  Spire  is  directly  binding  those
+[800]	166	Mate  Palfy	context_added	
+[801]	167	Jessica  Polka	results_nounchange_1-	more  specific
+[802]	168	Dey,  Gautam	context_added_1	
+[803]	168	Jessica  Polka	context_added_1	
+[804]	168	Jessica  Polka		rearrangement
+[805]	168	Dey,  Gautam		just  moved  around
+[806]	168	Mate  Palfy	context_added_1+	scored  as  context  instead  of  conclusion  as  a  speculation  was  added
+[807]	169	Jessica  Polka		reconciled
+[808]	169	Dey,  Gautam	context_nounchange_1	
+[809]	169	Mate  Palfy	resuts_removed_1	
+[810]	169	Mate  Palfy	results_added_1+	vague  statement  made  more  precise:  “TF  diversity  constrained  by  regulatory  roles”  ->  “TFs  of  large  regulons  more  conserved”    
+[811]	169	Mate  Palfy	results_added_1+	result  changing  from  “an  excess  of  beneficial  mutations  in  TFs”  to  “higher  mutation  frequency  in  TFs”    
+[812]	169	Dey,  Gautam	results_effect+_2	
+[813]	169	Dey,  Gautam	results_added_2	much  longer  evolution  60000  vs  10000  totally  changed  the  outcome??
+[814]	170	Mate  Palfy	conclusions_added_1+	
+[815]	172	Jessica  Polka		rearranged
+[816]	172	jonathon coates	results_stat-_1	
+[817]	172	Mate  Palfy	conclusion_removed_1	
+[818]	172	Jessica  Polka	conclusions_removed_1	
+[819]	172	Dey,  Gautam	conclusions_effect-_1	
+[820]	174	Jessica  Polka		reconciled
+[821]	174	Jessica  Polka	context_removed_1	
+[822]	174	Jessica  Polka		rearrangement
+[823]	174	Jessica  Polka		rearrangement
+[824]	174	Jessica  Polka	context_added_1+	
+[825]	174	Jessica  Polka	results_nounchange_1+	suggests  a  larger  subset  of  genes  was  looked  at
+[826]	174	Mate  Palfy	results_removed_1	
+[827]	174	Jessica  Polka		clarity
+[828]	174	Jessica  Polka	results_stat-_1-	complete  ->  highly  effective
+[829]	174	Dey,  Gautam	conclusion_added_1	
+[830]	175	Jessica  Polka		rearrangement
+[831]	175	Jessica  Polka	context_added_1+	
+[832]	175	jonathon coates	results_effect-_1	
+[833]	175	Mate  Palfy	results_added_1+	
+[834]	178	Jessica  Polka	results_added_1+	
+[835]	178	Jessica  Polka	results_added_1+	
+[836]	178	Jessica  Polka		release  implied  by  binding  dynamics
+[837]	178	Dey,  Gautam	results_nounchange_1	
+[838]	178	Jessica  Polka	context_removed_1	
+[839]	181	Jessica  Polka		reconciled
+[840]	181	Dey,  Gautam	context_effect-_1	
+[841]	181	Jessica  Polka	conclusion_removed_2	new  abstract  implies  some  of  this  was  already  known
+[842]	181	Dey,  Gautam	context_added_1	
+[843]	181	Mate  Palfy	results_statinfo_1+	reduction  in  GPP  was  stated  in  preprint  abstract  already
+[844]	181	Mate  Palfy	results_statinfo_1+	
+[845]	181	Mate  Palfy	results_statinfo_1+	
+[846]	181	Mate  Palfy	results_added_1+	
+[847]	181	Jessica  Polka	results_removed_3	
+[848]	181	Jessica  Polka	results_added_3	
+[849]	181	Mate  Palfy	conclusions_removed_1	
+[850]	184	Dey,  Gautam	context_nounchange_1	
+[851]	185	Jessica  Polka	result_added_1+	DSBs  follow  from  SSBs
+[852]	185	Mate  Palfy	results_added_1+	
