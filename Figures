@@ -13,13 +13,21 @@ theme_set(theme_minimal() +
 
 
 # Data import -------------
-preprint_info <- read_csv("./data/preprint_info.csv")
+# Files here have been combined & processed for use in creating figs. Raw analysis files can be found in the "Raw" folder in the repo
+preprint_info <- read_csv("./data/preprint_info.csv") 
+# Preprint metadata collected as part of Fraser et al (code: 10.5281/zenodo.4501924) 
 main_body_changes <- read.csv("./data/main_body_changes.csv")
+# Analysis of the changes in panels, tables and preprint-paper metadata 
 abstract_scoring <- read_csv("./data/abstract_scoring.csv")
+# Analysis of abstracts using computational methods
 preprint_full <- read_csv("./data/preprint_details.csv")
+# Preprint metadata collected as part of Fraser et al (code: 10.5281/zenodo.4501924) 
 panels <- read_csv("./data/panels_server.csv")
+# Total panels broken down by server and COVID-status
 rec_scores <- read_csv("./data/rec_scores.csv")
+# Granular analysis of abstract changes combined with the overall (Highest) score
 abstract_scoring_reconciled <- read_csv("./data/reconciled_scores.csv")
+# Granular analysis of abstract changes
 
 # Figure 1 --------------
 
@@ -682,11 +690,10 @@ ggsave("./figures/changes_S_Fig_3.png", width = 10, height = 12)
 
 
 # join / create data frames -----
-preprint_info <- read_csv("./input/preprint_info.csv")
-main_body_changes <- read.csv("./input/main_body_changes.csv")
+
 abstract_scoring_reconciled <- read_csv("https://raw.githubusercontent.com/preprinting-a-pandemic/preprint_changes/cleaning-up/final_reconciled_annotations.csv?token=AO6LFYUCOAYIT63OUBCSVVDAE64ZI")
 
-abstract_scoring <- read_csv("./input/all_pairs.csv")
+
 
 # Abstract_scoring
 abstract_scoring <- left_join(abstract_scoring, preprint_info, by = "doi")
