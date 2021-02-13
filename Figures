@@ -13,13 +13,13 @@ theme_set(theme_minimal() +
 
 
 # Data import -------------
-preprint_info <- read_csv("./input/preprint_info.csv")
-main_body_changes <- read.csv("./output/main_body_changes.csv")
-abstract_scoring <- read_csv("./output/abstract_scoring.csv")
-preprint_full <- read_csv("./output/preprint_details.csv")
-panels <- read_csv("./input/panels_server.csv")
-rec_scores <- read_csv("./output/rec_scores.csv")
-abstract_scoring_reconciled <- read_csv("./output/reconciled_scores.csv")
+preprint_info <- read_csv("./data/preprint_info.csv")
+main_body_changes <- read.csv("./data/main_body_changes.csv")
+abstract_scoring <- read_csv("./data/abstract_scoring.csv")
+preprint_full <- read_csv("./data/preprint_details.csv")
+panels <- read_csv("./data/panels_server.csv")
+rec_scores <- read_csv("./data/rec_scores.csv")
+abstract_scoring_reconciled <- read_csv("./data/reconciled_scores.csv")
 
 # Figure 1 --------------
 
