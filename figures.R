@@ -44,7 +44,7 @@ F1A <- preprint_full %>%
   ggplot(aes(x = covid_preprint, y = proportion, fill = covid_preprint))+
   geom_col(position = "dodge") +
   labs(y ="Percentage of preprints published \n between 1st Jan - 30 April", 
-       x = "COVID preprint") +
+       x = "") +
   scale_fill_manual(values = qualitative_hcl(n = 2, palette = "Set2")) +
   theme_minimal() +
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
@@ -65,7 +65,7 @@ F1B <- main_body_changes %>%
   ungroup %>%
   ggplot(aes(x = peer_review, y = proportion, fill = covid_preprint)) +
   geom_col(position = "dodge", color = "grey50", size = 0.25) +
-  labs(x = "Transparent peer-review", y = "% of preprints", fill = "") +
+  labs(x = "% of published preprints with transparent journal peer review", y = "% of preprints", fill = "") +
   theme_minimal() +
   scale_fill_manual(values = qualitative_hcl(n = 2, palette = "Set2")) +  
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
@@ -88,7 +88,7 @@ F1C <-   main_body_changes %>%
   ungroup %>% 
   ggplot(aes(x = source_data, y = proportion, fill = covid_preprint)) +
   geom_col(position = "dodge", color = "grey50", size = 0.25) +
-  labs(x = "Data availability", y = "Percentage of articles", fill = "") +
+  labs(x = "Data availability after publication", y = "Percentage of articles", fill = "") +
   theme_minimal() +
   scale_fill_manual(values = qualitative_hcl(n = 2, palette = "Set2")) +  
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
@@ -114,7 +114,7 @@ F1D <- main_body_changes %>%
   filter(author_list != "Removed & corresponding author change") %>%
   ggplot(aes(x = author_list, y = proportion, fill = covid_preprint)) +
   geom_col(position = "dodge", color = "grey50", size = 0.25) +
-  labs(x = "Change in authors", y = "% of preprints", fill = "") +
+  labs(x = "Change in authors after publication", y = "% of preprints", fill = "") +
   theme_minimal() +
   scale_fill_manual(values = qualitative_hcl(n = 2, palette = "Set2")) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
@@ -318,6 +318,9 @@ ggsave("./figures/changes_S_Fig_1.png", width = 10, height = 12)
 # Figure 2 ------------
 
 F2A <-  panels %>%   
+  # mutate(preprint_paper = factor(preprint_paper,
+  #                                levels = c("COVID preprint", "Non-COVID preprint", "COVID paper", "Non-COVID paper"),
+  #                                labels = c("COVID preprint", "Non-COVID preprint", "COVID paper", "Non-COVID paper"))) %>% 
   ggplot(aes(x = preprint_paper, y = main_total, fill = preprint_paper)) +
   geom_boxplot(outlier.shape = NA, alpha = 0.2) +
   geom_jitter(shape = 21, size = 0.6, alpha = 0.2, width = 0.3) +
@@ -327,7 +330,7 @@ F2A <-  panels %>%
   theme(text = element_text(size = 16)) +
   theme_minimal() +
   theme(legend.position = "none") +
-  labs(x = "Article type", y = "Total panels and tables") +
+  labs(x = "", y = "Total panels and tables") +
   guides(color = FALSE) 
 
 F2B <- main_body_changes %>%
@@ -339,7 +342,7 @@ F2B <- main_body_changes %>%
   theme_minimal() +
   scale_color_manual(values = qualitative_hcl(2, palette = "Set2")) +
   theme(legend.position = "none") +
-  labs(x = "COVID article", y = "Difference in number of panels and tables")
+  labs(x = "", y = "Difference in number of panels and tables")
 #  ggsave("./figures/main_panels_change.png", height = 8, width = 10, dpi = 300)
 
 F2C <- main_body_changes %>%
@@ -455,7 +458,7 @@ F3A <- abstract_scoring %>%
   geom_boxplot(alpha = 0.3, outlier.shape = NA) +
   theme_minimal() +
   theme(legend.position = "none") +
-  labs(x = "covid article", y = "Change ratio (difflib)") 
+  labs(x = "", y = "Change ratio (difflib)") 
 
 F3B <-  abstract_scoring %>% 
   mutate(covid_preprint = case_when(
@@ -467,7 +470,7 @@ F3B <-  abstract_scoring %>%
   geom_boxplot(alpha = 0.3, outlier.shape = NA) +
   theme_minimal() +
   theme(legend.position = "none") +
-  labs(x = "covid article", y = "Change ratio (Microsoft Word)")  
+  labs(x = "", y = "Change ratio (Microsoft Word)")  
 
 F3C <- abstract_scoring %>% 
   mutate(covid_preprint = case_when(
@@ -476,7 +479,7 @@ F3C <- abstract_scoring %>%
   filter(Highest_change != "NA") %>%
   mutate(Highest_change = factor(Highest_change,
                                  levels = c("0", "1", "2"),
-                                 labels = c("No Change", "Strengthening/softening, minor", "Major conclusion change"))) %>% 
+                                 labels = c("No Change", "Strengthening/ \n softening, minor", "Major \n conclusion change"))) %>% 
   count(Highest_change, covid_preprint) %>% 
   ggplot(aes(x = Highest_change, y = n, fill = covid_preprint)) +
   geom_col(position = "dodge") +
@@ -690,7 +693,7 @@ S_Fig_3 <- SF3A + SF3B + SF3C + SF3D + SF3E + SF3F +
   #  plot_layout(guides = "collect") +
   plot_annotation(tag_levels = "A") 
 
-S_Fig_3 + 
+S_Fig_3 #+ 
   ggsave("./figures/changes_S_Fig_3.png", width = 10, height = 12)
 
 
@@ -698,8 +701,6 @@ S_Fig_3 +
 # join / create data frames -----
 
 abstract_scoring_reconciled <- read_csv("https://raw.githubusercontent.com/preprinting-a-pandemic/preprint_changes/cleaning-up/final_reconciled_annotations.csv?token=AO6LFYUCOAYIT63OUBCSVVDAE64ZI")
-
-
 
 # Abstract_scoring
 abstract_scoring <- left_join(abstract_scoring, preprint_info, by = "doi")
@@ -711,7 +712,6 @@ main_body_changes <- left_join(main_body_changes, preprint_info, by = "doi")
 
 write_csv(main_body_changes, "./output/main_body_changes.csv") 
 
-
 # Reconciled scores with abstract score for better plotting of granular changes
 
 rec_scores <-  abstract_scoring %>% 
@@ -721,7 +721,7 @@ rec_scores <-  abstract_scoring %>%
 write_csv(rec_scores, "./output/rec_scores.csv") 
 
 
-# Statistical analyses
+# Statistical analyses ----
 # Percentage of preprints published
 # Chi-square test of association
 preprint_full %>%
@@ -760,25 +760,21 @@ main_body_changes %>%
 # Table for correlations
 
 corr_table <- abstract_scoring %>% 
-  select(doi, difflib_standard_change_ratio, word_change_ratio, `Sum of minus scores`, sum_of_plus_scores) %>% 
+  select(doi, `difflib standard change_ratio`, Word_change_ratio, `1+_annotations`, `1-_annotations`) %>% 
   left_join(rec_scores, by = "doi")
-
-rec_scores %>% 
-  group_by(doi) %>% 
-  count(score_modifier) %>%  View()
 
 # Correlation analysis ----
 
 covid_corr <-  abstract_scoring %>% 
   filter(covid_preprint == T) %>% 
-  select(Highest_change, difflib_standard_change_ratio, word_change_ratio) %>%
+  select(Highest_change, `difflib standard change_ratio`, Word_change_ratio) %>%
   rename(Highest_change = Highest_change,
-         'difflib change ratio' = difflib_standard_change_ratio,
-         'word change ratio' = word_change_ratio) %>%  
+         'difflib change ratio' = `difflib standard change_ratio`,
+         'word change ratio' = Word_change_ratio) %>%  
   correlate(method = "spearman")
 
 covid_corr_plot <- covid_corr %>% 
-  pivot_longer(score:'word change ratio') %>% 
+  pivot_longer(Highest_change:'word change ratio') %>% 
   rename(rows = term,
          cols = name) %>%
   filter(str_trunc(rows, 2, ellipsis = "") < str_trunc(cols, 2, ellipsis = ""))
@@ -798,14 +794,14 @@ covid_corr_plot %>%
 
 non_covid_corr <-  abstract_scoring %>% 
   filter(covid_preprint == F) %>% 
-  select(Highest_change, difflib_standard_change_ratio, word_change_ratio) %>%
+  select(Highest_change, `difflib standard change_ratio`, Word_change_ratio) %>%
   rename(Highest_change = Highest_change,
-         'difflib change ratio' = difflib_standard_change_ratio,
-         'word change ratio' = word_change_ratio) %>%  
+         'difflib change ratio' = `difflib standard change_ratio`,
+         'word change ratio' = Word_change_ratio) %>%  
   correlate(method = "spearman")
 
-non_covid_corr_plot <- covid_corr %>% 
-  pivot_longer(score:'word change ratio') %>% 
+non_covid_corr_plot <- non_covid_corr %>% 
+  pivot_longer(Highest_change:'word change ratio') %>% 
   rename(rows = term,
          cols = name) %>%
   filter(str_trunc(rows, 2, ellipsis = "") < str_trunc(cols, 2, ellipsis = ""))
