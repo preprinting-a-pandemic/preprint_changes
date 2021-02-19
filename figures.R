@@ -169,7 +169,7 @@ SF1A <- preprint_full %>%
   )) %>% 
   filter(posted_date >= as.Date("2020-01-01")) %>% 
   count(is_published, covid_preprint, source) %>% 
-  group_by(covid_preprint) %>%
+  group_by(covid_preprint, source) %>%
   mutate(proportion = (n/sum(n)) * 100) %>% 
   filter(is_published == T) %>%
   ggplot(aes(x = covid_preprint, y = proportion, fill = covid_preprint))+
@@ -318,9 +318,8 @@ ggsave("./figures/changes_S_Fig_1.png", width = 10, height = 12)
 # Figure 2 ------------
 
 F2A <-  panels %>%   
-  # mutate(preprint_paper = factor(preprint_paper,
-  #                                levels = c("COVID preprint", "Non-COVID preprint", "COVID paper", "Non-COVID paper"),
-  #                                labels = c("COVID preprint", "Non-COVID preprint", "COVID paper", "Non-COVID paper"))) %>% 
+  mutate(preprint_paper = factor(preprint_paper,
+                                 levels = c("COVID preprint", "COVID paper", "Non-COVID preprint", "Non-COVID paper"))) %>%
   ggplot(aes(x = preprint_paper, y = main_total, fill = preprint_paper)) +
   geom_boxplot(outlier.shape = NA, alpha = 0.2) +
   geom_jitter(shape = 21, size = 0.6, alpha = 0.2, width = 0.3) +
@@ -385,6 +384,8 @@ ggsave("./figures/changes_Fig_2.png", width = 10, height = 12)
 # Supp Fig 2 ----
 
 SF2A <- panels %>%   
+  mutate(preprint_paper = factor(preprint_paper,
+                                 levels = c("COVID preprint", "COVID paper", "Non-COVID preprint", "Non-COVID paper"))) %>%
   ggplot(aes(x = preprint_paper, y = main_total, fill = preprint_paper)) +
   geom_boxplot(outlier.shape = NA, alpha = 0.2) +
   geom_jitter(shape = 21, size = 0.6, alpha = 0.2, width = 0.3) +
@@ -606,7 +607,7 @@ SF3C <-  abstract_scoring %>%
   labs(x = "Sum of positive scores", y = "Sum of negative scores", fill = "", color = "") +
   facet_wrap(~covid_preprint)
 
-SF3D <-   rec_scores %>%
+SF3D <- rec_scores %>%
   mutate(covid_preprint = case_when(
     covid_preprint == T ~ "COVID article",
     covid_preprint == F ~ "non-COVID article")) %>%
@@ -618,14 +619,14 @@ SF3D <-   rec_scores %>%
   mutate(section = factor(section, 
                           levels = c("context", "results", "conclusions"))) %>% 
   count(section, Highest_change, covid_preprint) %>%
-  group_by(Highest_change) %>% 
+  group_by(covid_preprint, section) %>% 
   mutate(proportion = (n/sum(n))*100) %>% 
   filter(section != "results/context") %>%
-  ungroup(Highest_change) %>% 
   ggplot(aes(x = section, y = proportion, fill = Highest_change, color = Highest_change)) +
-  geom_col(position = "fill", color = "grey50", size = 0.25) +
+  geom_col(position = "stack", color = "grey50", size = 0.25) +
+  geom_text(aes(label=n, group = Highest_change), color = "white", size=4, position = position_stack(vjust = .5)) +
   facet_wrap(~covid_preprint) +
-  labs(x = "Location of change", y = "Proportion of annotations \n in abstracts", fill = "", color = "") +
+  labs(x = "Location of change", y = "Percentage of annotations \n in abstracts", fill = "", color = "") +
   theme_minimal() +
   scale_fill_manual(values = c("#7EBA68","#6FB1E7")) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
@@ -644,14 +645,14 @@ SF3E <- rec_scores %>%
   mutate(section = factor(section, 
                           levels = c("context", "results", "conclusions"))) %>%
   count(`label+modifier`, Highest_change, covid_preprint) %>%
-  group_by(Highest_change) %>% 
+  group_by(covid_preprint, `label+modifier`) %>% 
   mutate(proportion = (n/sum(n))*100) %>% 
   filter(Highest_change != "NA") %>%
-  ungroup() %>% 
   ggplot(aes(x = `label+modifier`, y = proportion, fill = Highest_change, color = Highest_change)) +
-  geom_col(position = "fill", color = "grey50", size = 0.25) +
+  geom_col(position = "stack", color = "grey50", size = 0.25) +
+  geom_text(aes(label=n, group = Highest_change), color = "white", size=4, position = position_stack(vjust = .5)) +
   facet_wrap(~covid_preprint) +
-  labs(x = "Type of change", y = "Proportion of annotations \n in abstracts", fill = "") +
+  labs(x = "Type of change", y = "Percentage of annotations \n in abstracts", fill = "") +
   theme_minimal() +
   scale_fill_manual(values = c("#7EBA68","#6FB1E7")) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
@@ -672,8 +673,7 @@ SF3F <- abstract_scoring %>%
   geom_col() +
   labs(y = "Number of COVID-19 preprints \n subseqeuntly published", 
        x = "Journal title",
-       fill = "Abstract change",
-       caption = "journals with >1 published preprints only" ) +
+       fill = "Abstract change") +
   theme_minimal() +
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
   scale_fill_manual(values = qualitative_hcl(3, palette = "Set2")) +
@@ -694,31 +694,31 @@ S_Fig_3 <- SF3A + SF3B + SF3C + SF3D + SF3E + SF3F +
   plot_annotation(tag_levels = "A") 
 
 S_Fig_3 #+ 
-  ggsave("./figures/changes_S_Fig_3.png", width = 10, height = 12)
+ggsave("./figures/changes_S_Fig_3.png", width = 10, height = 12)
 
 
 
-# join / create data frames -----
-
-abstract_scoring_reconciled <- read_csv("https://raw.githubusercontent.com/preprinting-a-pandemic/preprint_changes/cleaning-up/final_reconciled_annotations.csv?token=AO6LFYUCOAYIT63OUBCSVVDAE64ZI")
-
-# Abstract_scoring
-abstract_scoring <- left_join(abstract_scoring, preprint_info, by = "doi")
-
-write_csv(abstract_scoring, "./output/abstract_scoring.csv")
-
-# main_body_changes
-main_body_changes <- left_join(main_body_changes, preprint_info, by = "doi")
-
-write_csv(main_body_changes, "./output/main_body_changes.csv") 
-
-# Reconciled scores with abstract score for better plotting of granular changes
-
-rec_scores <-  abstract_scoring %>% 
-  select(doi, Highest_change) %>% 
-  left_join(abstract_scoring_reconciled, by = "doi") 
-
-write_csv(rec_scores, "./output/rec_scores.csv") 
+# # join / create data frames -----
+# 
+# abstract_scoring_reconciled <- read_csv("https://raw.githubusercontent.com/preprinting-a-pandemic/preprint_changes/cleaning-up/final_reconciled_annotations.csv?token=AO6LFYUCOAYIT63OUBCSVVDAE64ZI")
+# 
+# # Abstract_scoring
+# abstract_scoring <- left_join(abstract_scoring, preprint_info, by = "doi")
+# 
+# write_csv(abstract_scoring, "./output/abstract_scoring.csv")
+# 
+# # main_body_changes
+# main_body_changes <- left_join(main_body_changes, preprint_info, by = "doi")
+# 
+# write_csv(main_body_changes, "./output/main_body_changes.csv") 
+# 
+# # Reconciled scores with abstract score for better plotting of granular changes
+# 
+# rec_scores <-  abstract_scoring %>% 
+#   select(doi, Highest_change) %>% 
+#   left_join(abstract_scoring_reconciled, by = "doi") 
+# 
+# write_csv(rec_scores, "./output/rec_scores.csv") 
 
 
 # Statistical analyses ----
@@ -765,59 +765,22 @@ corr_table <- abstract_scoring %>%
 
 # Correlation analysis ----
 
-covid_corr <-  abstract_scoring %>% 
-  filter(covid_preprint == T) %>% 
-  select(Highest_change, `difflib standard change_ratio`, Word_change_ratio) %>%
-  rename(Highest_change = Highest_change,
-         'difflib change ratio' = `difflib standard change_ratio`,
-         'word change ratio' = Word_change_ratio) %>%  
-  correlate(method = "spearman")
-
-covid_corr_plot <- covid_corr %>% 
-  pivot_longer(Highest_change:'word change ratio') %>% 
-  rename(rows = term,
-         cols = name) %>%
-  filter(str_trunc(rows, 2, ellipsis = "") < str_trunc(cols, 2, ellipsis = ""))
-
-covid_corr_plot %>%
-  ggplot(aes(x = rows, y = cols, fill = value)) +
-  geom_tile() +
-  geom_text(aes(label = round(value, 2)), size = 3) +
-  scale_fill_continuous_sequential(palette = "Reds3", 
-                                   breaks = c(0, 0.5, 1), 
-                                   limits = c(0, 1)) +
-  labs(x = "", y = "", title = "COVID-19 preprints",
-       fill = "Spearman Correlation") +
-  theme(plot.title = element_text(size = 10),
-        axis.text.x = element_text(angle = 45, hjust = 1)) +
-  guides(fill = FALSE)
-
-non_covid_corr <-  abstract_scoring %>% 
-  filter(covid_preprint == F) %>% 
-  select(Highest_change, `difflib standard change_ratio`, Word_change_ratio) %>%
-  rename(Highest_change = Highest_change,
-         'difflib change ratio' = `difflib standard change_ratio`,
-         'word change ratio' = Word_change_ratio) %>%  
-  correlate(method = "spearman")
-
-non_covid_corr_plot <- non_covid_corr %>% 
-  pivot_longer(Highest_change:'word change ratio') %>% 
-  rename(rows = term,
-         cols = name) %>%
-  filter(str_trunc(rows, 2, ellipsis = "") < str_trunc(cols, 2, ellipsis = ""))
-
-non_covid_corr_plot %>%
-  ggplot(aes(x = rows, y = cols, fill = value)) +
-  geom_tile() +
-  geom_text(aes(label = round(value, 2)), size = 3) +
-  scale_fill_continuous_sequential(palette = "Reds3", 
-                                   breaks = c(0, 0.5, 1), 
-                                   limits = c(0, 1)) +
-  labs(x = "", y = "", title = "non-COVID-19 preprints",
-       fill = "Spearman Correlation") +
-  theme(plot.title = element_text(size = 10),
-        axis.text.x = element_text(angle = 45, hjust = 1)) +
-  guides(fill = FALSE)
+abstract_scoring %>% 
+  filter(covid_preprint == T) %>%
+  select(Word_change_ratio, `difflib standard change_ratio`, `1+_annotations`, `1-_annotations`) %>%
+  map_df(~ broom::tidy(cor.test(., 
+                                abstract_scoring %>% 
+                                  filter(covid_preprint == T) %>% 
+                                  pull(Highest_change),
+                                method = "spearman")), .id = 'var')
+abstract_scoring %>% 
+  filter(covid_preprint == F) %>%
+  select(Word_change_ratio, `difflib standard change_ratio`, `1+_annotations`, `1-_annotations`) %>%
+  map_df(~ broom::tidy(cor.test(., 
+                                abstract_scoring %>% 
+                                  filter(covid_preprint == F) %>% 
+                                  pull(Highest_change),
+                                method = "spearman")), .id = 'var')
 
 # Data tables -----
 
