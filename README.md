@@ -1,4 +1,4 @@
-This repository contains code and datasets for the study "Preprints in motion: tracking changes between posting and publication" available from (bioRxv)[https://www.biorxiv.org/content/10.1101/2021.02.20.432090v1].
+This repository contains code and datasets for the study "Preprints in motion: tracking changes between posting and publication" available from [bioRxv](https://www.biorxiv.org/content/10.1101/2021.02.20.432090v1).
 
 This README contains an overview of the different files and datasets contained in this repository. The full methodology is documented in the above linked preprint.
 
