@@ -1,7 +1,9 @@
 setwd("D:/Dropbox/Preprinting a pandemic/Code")
 
+#setwd("C://Users//Liam//Documents//GitHub//preprint_changes")
+
 # Load libraries and set theme ----
-pacman::p_load("tidyverse", "colorspace", "lubridate", "patchwork", "corrr")
+pacman::p_load("tidyverse", "colorspace", "lubridate", "patchwork", "corrr", "DescTools")
 
 theme_set(theme_minimal() +
             theme(text = element_text(size = 12),
@@ -20,7 +22,7 @@ preprint_info <- read_csv("./data/preprint_info.csv")
 # Preprint metadata collected as part of Fraser et al (code: 10.5281/zenodo.4501924) 
 main_body_changes <- read.csv("./data/main_body_changes.csv")
 # Analysis of the changes in panels, tables and preprint-paper metadata 
-abstract_scoring <- read_csv("./data/abstract_scoring.csv")
+abstract_scoring <- read_csv("./data/abstract_scoring.csv") %>% filter(exclude == "keep") %>% select(-X1.x) # Retain only non-excluded abstracts
 # Analysis of abstracts using computational methods
 preprint_full <- read_csv("./data/preprint_details.csv")
 # Preprint metadata collected as part of Fraser et al (code: 10.5281/zenodo.4501924) 
@@ -30,6 +32,16 @@ rec_scores <- read_csv("./data/rec_scores.csv")
 # Granular analysis of abstract changes combined with the overall (Highest) score
 abstract_scoring_reconciled <- read_csv("./data/reconciled_scores.csv")
 # Granular analysis of abstract changes
+
+# Define functions ------
+
+# Automated abbreviations for journal titles
+j_abbrev <- function(x) {
+  x %>%
+    gsub("Clinical Immunology", "CIM", .) %>% # Manual override to prevent Cll and ClI being indistinguishable
+    gsub("[[:punct:] ]+| and | of | in |the |ournal|ical", " ", .) %>%
+    abbreviate(minlength = 3)
+}
 
 # Figure 1 --------------
 
@@ -47,11 +59,41 @@ F1A <- preprint_full %>%
   geom_col(position = "dodge") +
   labs(y ="Percentage of preprints published \n between 1st Jan - 30 April", 
        x = "") +
+  geom_text(aes(label=n, group = covid_preprint), color = "white", size=4, position = position_stack(vjust = .5)) +
   scale_fill_manual(values = qualitative_hcl(n = 2, palette = "Set2")) +
   theme_minimal() +
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
   theme(plot.title = element_text(hjust = 0.5)) +
   theme(legend.position = "none")
+
+# CONFINT VERSION
+F1A_alt <- preprint_full %>%
+  mutate(covid_preprint = case_when(
+    covid_preprint == T ~ "COVID article",
+    covid_preprint == F ~ "Non-COVID article"
+  )) %>% 
+  filter(posted_date >= as.Date("2020-01-01")) %>% 
+  count(is_published, covid_preprint) %>% 
+  group_by(covid_preprint) %>%
+  mutate(total_n = sum(n), 
+         proportion = (n/sum(n)) * 100) %>%
+  rowwise %>%
+  mutate(lowerCI = prop.test(n, total_n, correct=FALSE)$conf.int[1]*100,
+         upperCI = prop.test(n, total_n, correct=FALSE)$conf.int[2]*100) %>% 
+  filter(is_published == T) %>%
+  ggplot(aes(x = covid_preprint, y = proportion, fill = covid_preprint))+
+  geom_col(position = "dodge") +
+  geom_errorbar(aes(ymin = lowerCI, ymax = upperCI), width = 0.3, position="dodge") +
+  labs(y ="Percentage of preprints published \n between 1st Jan - 30 April", 
+       x = "") +
+  geom_text(aes(label=n, group = covid_preprint), color = "white", size=4, position = position_stack(vjust = .5)) +
+  scale_fill_manual(values = qualitative_hcl(n = 2, palette = "Set2")) +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  theme(plot.title = element_text(hjust = 0.5)) +
+  theme(legend.position = "none")
+
+
 
 F1B <- main_body_changes %>%
   mutate(covid_preprint = case_when(
@@ -97,6 +139,33 @@ F1C <-   main_body_changes %>%
   guides(color = FALSE) +
   theme(legend.position = "none")
 
+# CONFINT VERSION
+F1C_alt <- main_body_changes %>%
+  mutate(covid_preprint = case_when(
+    covid_preprint == T ~ "COVID article",
+    covid_preprint == F ~ "non-COVID article"),
+    source_data = factor(case_when(source_data == -2 ~ "Less accessible",
+                                   source_data == -1  ~ "Upon request",
+                                   source_data == 0 ~ "Supplemental or repository",
+                                   source_data == 1 ~ "More available",
+                                   is.na(source_data) ~ "NA"),
+                         levels = c("Less accessible",  "Upon request", "Supplemental or repository", "More available", "NA"))) %>%
+  count(covid_preprint, source_data) %>%
+  group_by(covid_preprint) %>%
+  mutate(proportion = (n/sum(n))*100,
+         lowerCI = MultinomCI(n, conf.level=0.95, method = "wilson")[,2]*100,
+         upperCI = MultinomCI(n, conf.level=0.95, method = "wilson")[,3]*100) %>% 
+  ungroup %>% 
+  ggplot(aes(x = source_data, y = proportion, fill = covid_preprint)) +
+  geom_col(position = "dodge", color = "grey50", size = 0.25, width = 0.5) +
+  geom_errorbar(aes(ymin = lowerCI, ymax = upperCI), position = position_dodge(0.5), width = 0.2) +
+  labs(x = "Data availability after publication", y = "Percentage of articles", fill = "") +
+  theme_minimal() +
+  scale_fill_manual(values = qualitative_hcl(n = 2, palette = "Set2")) +  
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  guides(color = FALSE) +
+  theme(legend.position = "none")
+
 F1D <- main_body_changes %>%
   mutate(covid_preprint = case_when(
     covid_preprint == T ~ "COVID article",
@@ -132,7 +201,7 @@ F1E <-  abstract_scoring %>%
   filter(n > 1) %>% 
   ggplot(aes(x = published_journal, y = n, fill = covid_preprint)) +
   geom_col() +
-  labs(y = "Number of preprints \n subseqeuntly published (>1)", 
+  labs(y = "Number of preprints \n subsequently published (>1)", 
        x = "Journal title",
        caption = "journals with >1 published preprints only",
        fill = "", 
@@ -271,7 +340,7 @@ SF1E <- abstract_scoring %>%
   filter(n > 1) %>% 
   ggplot(aes(x = published_journal, y = n, fill = covid_preprint)) +
   geom_col() +
-  labs(y = "Number of bioRxiv preprints \n subseqeuntly published (>1)", 
+  labs(y = "Number of bioRxiv preprints \n subsequently published (>1)", 
        x = "Journal title") +
   theme_minimal() +
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
@@ -289,7 +358,7 @@ SF1F <- abstract_scoring %>%
   filter(n > 1) %>% 
   ggplot(aes(x = published_journal, y = n, fill = covid_preprint)) +
   geom_col() +
-  labs(y = "Number of medRxiv preprints \n subseqeuntly published (>1)", 
+  labs(y = "Number of medRxiv preprints \n subsequently published (>1)", 
        x = "Journal title",
        color = "",
        fill = "") +
@@ -318,15 +387,15 @@ ggsave("./figures/changes_S_Fig_1.png", width = 10, height = 12)
 
 
 # Figure 2 ------------
-
 F2A <-  panels %>%   
   mutate(preprint_paper = factor(preprint_paper,
                                  levels = c("COVID preprint", "COVID paper", "Non-COVID preprint", "Non-COVID paper"))) %>%
   ggplot(aes(x = preprint_paper, y = main_total, fill = preprint_paper)) +
-  geom_boxplot(outlier.shape = NA, alpha = 0.2) +
-  geom_jitter(shape = 21, size = 0.6, alpha = 0.2, width = 0.3) +
+  geom_jitter(aes(color = preprint_paper), shape = 21, size = 0.6, alpha = 0.6, width = 0.3) +
+  geom_boxplot(outlier.shape = NA, alpha = 0.3, notch=TRUE) +
   labs(x = "", y = "total panels & tables", fill = "") +
   scale_fill_manual(values = rep(qualitative_hcl(2, palette = "Set2"), each = 2)) +
+  scale_color_manual(values = rep(qualitative_hcl(2, palette = "Set2"), each = 2)) +
   scale_x_discrete(labels = function(x) str_wrap(x, width = 12)) +
   theme(text = element_text(size = 16)) +
   theme_minimal() +
@@ -338,12 +407,12 @@ F2B <- main_body_changes %>%
   mutate(covid_preprint = case_when(
     covid_preprint == T ~ "COVID article",
     covid_preprint == F ~ "non-COVID article")) %>% 
-  ggplot(aes(y = panel_change, x = covid_preprint, color = covid_preprint, fill = covid_preprint)) +
-  geom_violin() +
+  ggplot(aes(x=covid_preprint, y = panel_change, color = covid_preprint, fill = covid_preprint)) +
+  geom_dotplot(binaxis = "y", binpositions="all", binwidth=1, stackdir="center", dotsize=0.7) +
   theme_minimal() +
   scale_color_manual(values = qualitative_hcl(2, palette = "Set2")) +
   theme(legend.position = "none") +
-  labs(x = "", y = "Difference in number \n of panels and tables")
+  labs(x = "", y = "Difference in number\nof panels and tables")
 #  ggsave("./figures/main_panels_change.png", height = 8, width = 10, dpi = 300)
 
 F2C <- main_body_changes %>%
@@ -384,13 +453,13 @@ F2D <- main_body_changes %>%
                                         "Significant content added", 
                                         "Significant content removed", 
                                         "Content added and removed")),
-    journal_short = abbreviate(published_journal, minlength = 4)) %>% 
+    journal_short = j_abbrev(published_journal)) %>% 
   count(journal_short, covid_preprint, change_outcomes) %>% 
   arrange(desc(n)) %>% 
   filter(covid_preprint == "COVID article") %>% 
   ggplot(aes(x = journal_short, y = n, fill = change_outcomes)) +
   geom_col() +
-  labs(y = "Number of COVID-19 preprints \n subseqeuntly published", 
+  labs(y = "Number of COVID-19 preprints \n subsequently published", 
        x = "Journal title",
        fill = "Figures change") +
   theme_minimal() +
@@ -409,13 +478,13 @@ F2E <- main_body_changes %>%
                                         "Significant content added", 
                                         "Significant content removed", 
                                         "Content added and removed")),
-    journal_short = abbreviate(published_journal, minlength = 4)) %>% 
+    journal_short = j_abbrev(published_journal)) %>% 
   count(journal_short, covid_preprint, change_outcomes) %>% 
   arrange(desc(n)) %>% 
   filter(covid_preprint == "non-COVID article") %>% 
   ggplot(aes(x = journal_short, y = n, fill = change_outcomes)) +
   geom_col() +
-  labs(y = "Number of non-COVID-19 preprints \n subseqeuntly published", 
+  labs(y = "Number of non-COVID-19 preprints \n subsequently published", 
        x = "Journal title",
        fill = "Figures change") +
   theme_minimal() +
@@ -424,7 +493,7 @@ F2E <- main_body_changes %>%
   theme(legend.position = "bottom")
 
 main_body_changes %>%
-  mutate(journal_short = abbreviate(published_journal, minlength = 4)) %>%
+  mutate(journal_short = j_abbrev(published_journal)) %>% 
   select(published_journal, journal_short) %>%
   distinct() %>%
   arrange(journal_short) %>%
@@ -440,7 +509,7 @@ EEEE
 "  
 
 Fig_2 <- F2A + F2B + F2C + F2D + F2E +
-   plot_layout(design = layout_F3) +
+  plot_layout(design = layout_F3) +
   # plot_layout(guides = "collect") +
   plot_annotation(tag_levels = "A")
 
@@ -448,20 +517,20 @@ Fig_2 #+
 ggsave("./figures/changes_Fig_2.png", width = 10, height = 12)
 
 # Supp Fig 2 ----
-
-SF2A <- panels %>%   
+SF2A <-  panels %>%   
   mutate(preprint_paper = factor(preprint_paper,
                                  levels = c("COVID preprint", "COVID paper", "Non-COVID preprint", "Non-COVID paper"))) %>%
   ggplot(aes(x = preprint_paper, y = main_total, fill = preprint_paper)) +
-  geom_boxplot(outlier.shape = NA, alpha = 0.2) +
-  geom_jitter(shape = 21, size = 0.6, alpha = 0.2, width = 0.3) +
+  geom_jitter(aes(color = preprint_paper), shape = 21, size = 0.6, alpha = 0.6, width = 0.3) +
+  geom_boxplot(outlier.shape = NA, alpha = 0.3, notch=TRUE) +
   labs(x = "", y = "total panels & tables", fill = "") +
   scale_fill_manual(values = rep(qualitative_hcl(2, palette = "Set2"), each = 2)) +
+  scale_color_manual(values = rep(qualitative_hcl(2, palette = "Set2"), each = 2)) +
   scale_x_discrete(labels = function(x) str_wrap(x, width = 12)) +
+  theme(text = element_text(size = 16)) +
   theme_minimal() +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
   theme(legend.position = "none") +
-  labs(x = "Article type", y = "Total panels and tables") +
+  labs(x = "", y = "Total panels and tables") +
   guides(color = FALSE) +
   facet_wrap(~source)
 
@@ -470,7 +539,7 @@ SF2B <- main_body_changes %>%
     covid_preprint == T ~ "COVID article",
     covid_preprint == F ~ "non-COVID article")) %>% 
   ggplot(aes(y = panel_change, x = covid_preprint, color = covid_preprint, fill = covid_preprint)) +
-  geom_violin() +
+  geom_dotplot(binaxis = "y", binpositions="all", binwidth=1, stackdir="center") +
   theme_minimal() +
   scale_color_manual(values = qualitative_hcl(2, palette = "Set2")) +
   theme(legend.position = "none") +
@@ -520,10 +589,9 @@ F3A <- abstract_scoring %>%
     covid_preprint == T ~ "COVID article",
     covid_preprint == F ~ "non-COVID article")) %>% 
   filter(covid_preprint != "NA") %>%
-  filter(exclude == "keep") %>% 
-  ggplot(aes(x= covid_preprint, y = `difflib standard change_ratio`, color = covid_preprint)) +
-  geom_jitter(alpha = 0.3) +
-  geom_boxplot(alpha = 0.3, outlier.shape = NA) +
+  ggplot(aes(x= covid_preprint, y = `difflib standard change_ratio`, fill = covid_preprint)) +
+  geom_jitter(aes(color = covid_preprint), shape = 21, alpha = 0.6, width = 0.3) +
+  geom_boxplot(outlier.shape = NA, alpha = 0.3, notch=TRUE) +
   theme_minimal() +
   theme(legend.position = "none") +
   labs(x = "", y = "Change ratio (difflib)") 
@@ -533,10 +601,9 @@ F3B <-  abstract_scoring %>%
     covid_preprint == T ~ "COVID article",
     covid_preprint == F ~ "non-COVID article")) %>% 
   filter(covid_preprint != "NA") %>%
-  filter(exclude == "keep") %>% 
-  ggplot(aes(x= covid_preprint, y = Word_change_ratio, color = covid_preprint)) +
-  geom_jitter(alpha = 0.3) +
-  geom_boxplot(alpha = 0.3, outlier.shape = NA) +
+  ggplot(aes(x= covid_preprint, y = Word_change_ratio, fill = covid_preprint)) +
+  geom_jitter(aes(color = covid_preprint), shape = 21, alpha = 0.6, width = 0.3) +
+  geom_boxplot(outlier.shape = NA, alpha = 0.3, notch=TRUE) +
   theme_minimal() +
   theme(legend.position = "none") +
   labs(x = "", y = "Change ratio (Microsoft Word)")  
@@ -546,7 +613,6 @@ F3C <- abstract_scoring %>%
     covid_preprint == T ~ "COVID article",
     covid_preprint == F ~ "non-COVID article")) %>% 
   filter(Highest_change != "NA") %>%
-  filter(exclude == "keep") %>% 
   mutate(Highest_change = factor(Highest_change,
                                  levels = c("0", "1", "2"),
                                  labels = c("No Change", "Strengthening/ \n softening, minor", "Major \n conclusion change"))) %>% 
@@ -564,9 +630,8 @@ F3D <- abstract_scoring %>%
     covid_preprint == T ~ "COVID article",
     covid_preprint == F ~ "non-COVID article")) %>% 
   filter(covid_preprint != "NA") %>% 
-  filter(exclude == "keep") %>% 
   ggplot(aes(x= `1+_annotations`, y= `1-_annotations`, color = covid_preprint)) +
-  geom_jitter(alpha = 0.3, position = position_jitterdodge(jitter.height=0.1, jitter.width = 0, dodge.width=0.3)) +
+  geom_point(alpha = 0.3, position = position_jitterdodge(jitter.height=0.1, jitter.width = 0, dodge.width=0.3)) +
   scale_y_continuous(minor_breaks = seq(0, 10, 1), breaks = seq(0, 8, 2)) +
   scale_x_continuous(minor_breaks = seq(0, 10, 1), breaks = seq(0, 12, 2)) +
   theme_minimal() +
@@ -633,10 +698,9 @@ SF3A <-  abstract_scoring %>%
                                  levels = c("0", "1", "2"),
                                  labels = c("No Change", "Strengthening/softening, minor", "Major conclusion change"))) %>% 
   filter(covid_preprint != "NA") %>%
-  filter(exclude == "keep") %>% 
-  ggplot(aes(x= Highest_change, y = `difflib standard change_ratio`, color = covid_preprint)) +
-  geom_jitter(alpha = 0.3, position=position_dodge(width=0.75)) +
-  geom_boxplot(alpha = 0.3, outlier.shape = NA) +
+  ggplot(aes(x= Highest_change, y = `difflib standard change_ratio`, fill = covid_preprint)) +
+  geom_point(aes(color = covid_preprint), shape = 21, alpha = 0.6, size = 0.6, position=position_jitterdodge(jitter.width = 0.3, dodge.width=0.75)) +
+  geom_boxplot(outlier.shape = NA, alpha = 0.3) +
   theme_minimal() +
   theme(legend.position = "bottom") +
   labs(x = "scored change", y = "Change ratio", fill = "", color = "") +
@@ -651,10 +715,9 @@ SF3B <-  abstract_scoring %>%
                                  levels = c("0", "1", "2"),
                                  labels = c("No Change", "Strengthening/softening, minor", "Major conclusion change"))) %>%
   filter(covid_preprint != "NA") %>%
-  filter(exclude == "keep") %>% 
-  ggplot(aes(x= Highest_change, y = Word_change_ratio, color = covid_preprint)) +
-  geom_jitter(alpha = 0.3, position=position_dodge(width=0.75)) +
-  geom_boxplot(alpha = 0.3, outlier.shape = NA) +
+  ggplot(aes(x= Highest_change, y = Word_change_ratio, fill = covid_preprint)) +
+  geom_point(aes(color = covid_preprint), shape = 21, alpha = 0.6, size = 0.6, position=position_jitterdodge(jitter.width = 0.3, dodge.width=0.75)) +
+  geom_boxplot(outlier.shape = NA, alpha = 0.3) +
   theme_minimal() +
   theme(legend.position = "none") +
   labs(x = "Scored change", y = "Word change ratio") +
@@ -669,9 +732,8 @@ SF3C <-  abstract_scoring %>%
                                  levels = c("0", "1", "2"),
                                  labels = c("No Change", "Strengthening/softening, minor", "Major conclusion change"))) %>%
   filter(covid_preprint != "NA") %>% 
-  filter(exclude == "keep") %>% 
   ggplot(aes(x= `1+_annotations`, y= `1-_annotations`, color = Highest_change)) +
-  geom_jitter(alpha = 0.3, position = position_jitterdodge(jitter.height=0.1, jitter.width = 0, dodge.width=0.5)) +
+  geom_point(alpha = 0.3, position = position_jitterdodge(jitter.height=0.1, jitter.width = 0, dodge.width=0.5)) +
   scale_y_continuous(minor_breaks = seq(0, 10, 1), breaks = seq(0, 8, 2)) +
   scale_x_continuous(minor_breaks = seq(0, 10, 1), breaks = seq(0, 12, 2)) +
   theme_minimal() +
@@ -732,7 +794,6 @@ SF3E <- rec_scores %>%
   theme(legend.position = "none") 
 
 SF3F <- abstract_scoring %>%
-  filter(exclude == "keep") %>% 
   mutate(covid_preprint = case_when(
     covid_preprint == T ~ "COVID article",
     covid_preprint == F ~ "non-COVID article")) %>% 
@@ -756,16 +817,15 @@ SF3G <- abstract_scoring %>%
     covid_preprint == T ~ "COVID article",
     covid_preprint == F ~ "non-COVID article")) %>% 
   filter(covid_preprint == "COVID article") %>%
-  filter(exclude == "keep") %>% 
   mutate(Highest_change = factor(Highest_change,
                                  levels = c("0", "1", "2"),
                                  labels = c("No Change", "Strengthening/softening, minor", "Major conclusion change"))) %>% 
   count(published_journal, covid_preprint, Highest_change) %>% 
   arrange(desc(n)) %>% 
   #  filter(n > 1) %>% 
-  ggplot(aes(x = abbreviate(published_journal, minlength = 4), y = n, fill = Highest_change)) +
+  ggplot(aes(x = j_abbrev(published_journal), y = n, fill = Highest_change)) +
   geom_col() +
-  labs(y = "Number of COVID-19 preprints \n subseqeuntly published", 
+  labs(y = "Number of COVID-19 preprints \n subsequently published", 
        x = "Journal title",
        fill = "Abstract change") +
   theme_minimal() +
@@ -788,7 +848,7 @@ S_Fig_3 <- SF3A + SF3B + SF3C + SF3D + SF3E + SF3F + SF3G +
   plot_annotation(tag_levels = "A") 
 
 S_Fig_3 + 
-ggsave("./figures/changes_S_Fig_3.png", width = 10, height = 12)
+  ggsave("./figures/changes_S_Fig_3.png", width = 10, height = 12)
 
 # Fig 4 -----
 comments <- read_csv("https://raw.githubusercontent.com/preprinting-a-pandemic/pandemic_preprints/1716d724a0072bd63b30b9afed14d00ebd7dd932/data/preprint_comments_20190901_20200430.csv")  
@@ -811,7 +871,7 @@ F4A <- abstract_scoring_altmetrics %>%
                                  labels = c("No Change", "Strengthening/softening, minor", "Major conclusion change"))) %>% 
   filter(twitter >= 2) %>%
   ggplot(aes(x = Highest_change, y = twitter, fill = Highest_change)) +
-  geom_jitter(aes(colour = Highest_change), alpha = 0.4, width = 0.3) +
+  geom_jitter(aes(colour = Highest_change), shape = 21, size = 0.6, alpha = 0.6, width = 0.3) +
   geom_boxplot(outlier.shape = NA, alpha = 0.3) +
   labs(y = "Tweets (>=2)", 
        x = "Degree of change",
@@ -821,7 +881,7 @@ F4A <- abstract_scoring_altmetrics %>%
   theme_minimal() +
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
   theme(legend.position = "none") #+
-  facet_wrap(~covid_preprint) #+
+facet_wrap(~covid_preprint) #+
 ggsave("./figures/delay_score_both.png", height = 4, width = 6)
 
 F4B <- main_body_changes %>% 
@@ -837,7 +897,7 @@ F4B <- main_body_changes %>%
                                         "Content added and removed"))) %>% 
   filter(twitter >= 2) %>%
   ggplot(aes(x = change_outcomes, y = twitter, fill = change_outcomes)) +
-  geom_jitter(aes(colour = change_outcomes), alpha = 0.4, width = 0.3) +
+  geom_jitter(aes(colour = change_outcomes), shape = 21, size = 0.6, alpha = 0.6, width = 0.3) +
   geom_boxplot(outlier.shape = NA, alpha = 0.3) +
   labs(y = "Tweets (>=2)", 
        x = "Change in figures",
@@ -859,7 +919,7 @@ F4C <- abstract_scoring_comments %>%
                                  labels = c("No Change", "Strengthening/softening, minor", "Major conclusion change"))) %>% 
   filter(comments_count >= 1) %>%
   ggplot(aes(x = Highest_change, y = comments_count, fill = Highest_change)) +
-  geom_jitter(aes(colour = Highest_change), alpha = 0.4, width = 0.3) +
+  geom_jitter(aes(colour = Highest_change), shape = 21, size = 0.6, alpha = 0.6, width = 0.3) +
   geom_boxplot(outlier.shape = NA, alpha = 0.3) +
   labs(y = "Comments (>=1)", 
        x = "Degree of change",
@@ -885,7 +945,7 @@ F4D <- main_body_changes %>%
                                         "Content added and removed"))) %>% 
   filter(comments_count >= 1) %>%
   ggplot(aes(x = change_outcomes, y = comments_count, fill = change_outcomes, color = change_outcomes)) +
-  geom_jitter(aes(colour = change_outcomes), alpha = 0.4, width = 0.3) +
+  geom_jitter(aes(colour = change_outcomes), shape = 21, size = 0.6, alpha = 0.6, width = 0.3) +
   geom_boxplot(outlier.shape = NA, alpha = 0.3, color = "black") +
   labs(y = "Comments (>=1)", 
        x = "Change in figures",
@@ -909,7 +969,7 @@ F4E <- abstract_scoring_citations %>%
                                  labels = c("No Change", "Strengthening/softening, minor", "Major conclusion change"))) %>% 
   filter(citations >= 1) %>%
   ggplot(aes(x = Highest_change, y = citations, fill = Highest_change, color = Highest_change)) +
-  geom_jitter(aes(colour = Highest_change), alpha = 0.4, width = 0.3) +
+  geom_jitter(aes(colour = Highest_change), shape = 21, size = 0.6, alpha = 0.6, width = 0.3) ++
   geom_boxplot(outlier.shape = NA, alpha = 0.3, color = "black") +
   labs(y = "Citations (>=1)", 
        x = "Degree of change",
@@ -921,7 +981,7 @@ F4E <- abstract_scoring_citations %>%
   theme(legend.position = "none") #+
 facet_wrap(~covid_preprint) #+
 ggsave("./figures/delay_score_both.png", height = 4, width = 6)
-  
+
 F4F <-  main_body_changes %>% 
   mutate(covid_preprint = case_when(
     covid_preprint == T ~ "COVID article",
@@ -935,7 +995,7 @@ F4F <-  main_body_changes %>%
                                         "Content added and removed"))) %>% 
   filter(citations >= 1) %>%
   ggplot(aes(x = change_outcomes, y = citations, fill = change_outcomes, color = change_outcomes)) +
-  geom_jitter(aes(colour = change_outcomes), alpha = 0.4, width = 0.3) +
+  geom_jitter(aes(colour = change_outcomes), shape = 21, size = 0.6, alpha = 0.6, width = 0.3) +
   geom_boxplot(outlier.shape = NA, alpha = 0.3, color = "black") +
   labs(y = "Citations (>=1)", 
        x = "Change in figures",
@@ -950,7 +1010,7 @@ ggsave("./figures/delay_score_both.png", height = 4, width = 6)
 
 Fig_4 <- F4A + F4B + F4C + F4D + F4E + F4F +
   plot_layout(ncol = 2) +
- #  plot_layout(guides = "collect") +
+  #  plot_layout(guides = "collect") +
   plot_annotation(tag_levels = "A") 
 
 Fig_4 +
@@ -979,6 +1039,12 @@ Fig_4 +
 # write_csv(rec_scores, "./output/rec_scores.csv") 
 
 
+# Statistical power -------
+# Calculate power for various effect sizes using sample of n = 184 for various tests
+data.frame(broom::tidy(pwr::pwr.chisq.test(N = 184, w = c(0.1,0.3,0.5), df = 1, sig.level = 0.05)) %>% select(power),
+           broom::tidy(pwr::pwr.r.test(n = 184, r = c(0.1,0.3,0.5), sig.level = 0.05)) %>% select(power)) %>%
+  setNames(c("power_chisq", "power_corr"))
+
 # Statistical analyses ----
 # Percentage of preprints published
 # Chi-square test of association
@@ -991,8 +1057,19 @@ preprint_full %>%
   with(., table(covid_preprint, is_published)) %>%
   chisq.test()
 
+# Percentage of preprints published with transparent peer review
+# Chi-square test of association
+main_body_changes %>%
+  mutate(covid_preprint = case_when(
+    covid_preprint == T ~ "COVID article",
+    covid_preprint == F ~ "Non-COVID article"
+  )) %>% 
+  with(., table(covid_preprint, peer_review)) %>%
+  chisq.test()
+
 # Data availability
 # Fisher's exact test of association
+set.seed()
 main_body_changes %>%
   mutate(covid_preprint = case_when(
     covid_preprint == T ~ "COVID article",
@@ -1007,13 +1084,69 @@ main_body_changes %>%
   fisher.test(simulate.p.value = TRUE, B = 1000)  
 
 # Author changes
-# Fisher's exact test of association
+# Chi-square test of association
 main_body_changes %>%
   mutate(covid_preprint = case_when(
     covid_preprint == T ~ "COVID article",
-    covid_preprint == F ~ "non-COVID article")) %>%
+    covid_preprint == F ~ "non-COVID article"),
+    author_list = ifelse(author_list == 0, 0, 1)) %>%
   with(., table(covid_preprint, author_list)) %>%
-  fisher.test(simulate.p.value = TRUE, B = 1000)  
+  chisq.test()
+
+# Chi-square test of association - additions versus other
+main_body_changes %>%
+  mutate(covid_preprint = case_when(
+    covid_preprint == T ~ "COVID article",
+    covid_preprint == F ~ "non-COVID article"),
+    author_list = ifelse(author_list == 1|author_list == 4, 1, 0)) %>%
+  with(., table(covid_preprint, author_list)) %>%
+  chisq.test()
+
+
+
+# Panels and tables numbers
+# Mann-Whitney (vs covid preprint)
+panels %>%
+  mutate(covid_preprint = case_when(                                    # Redefine COVID vs non-COVID articles
+    grepl("^COVID", preprint_paper) == T ~ "COVID article",
+    grepl("^COVID", preprint_paper) == F ~ "non-COVID article")) %>%
+    filter(grepl("preprint", preprint_paper)) %>%                       # Select only preprints to prevent double accounting
+  with(., wilcox.test(main_total ~ covid_preprint))
+
+# Mann-Whitney (vs covid paper)
+panels %>%
+  mutate(covid_preprint = case_when(                                    # Redefine COVID vs non-COVID articles
+    grepl("^COVID", preprint_paper) == T ~ "COVID article",
+    grepl("^COVID", preprint_paper) == F ~ "non-COVID article")) %>%
+  filter(grepl("paper", preprint_paper)) %>%                       # Select only papers to prevent double accounting
+  with(., wilcox.test(main_total ~ covid_preprint))
+
+# Mann-Whitney (vs source, preprints only)
+panels %>%
+  filter(grepl("preprint", preprint_paper)) %>%                       # Select only preprints to prevent double accounting
+  with(., wilcox.test(main_total ~ source))
+
+# Mann-Whitney (vs source, papers only)
+panels %>%
+  filter(grepl("paper", preprint_paper)) %>%                       # Select only papers to prevent double accounting
+  with(., wilcox.test(main_total ~ source))
+
+# Panels and table change
+# Mann-Whitney (vs covid preprint)
+main_body_changes %>%
+  with(., wilcox.test(panel_change ~ covid_preprint))
+
+# Fligner-Killeen's test for Homogeneity of Variance (vs covid preprint)
+main_body_changes %>%
+  with(., fligner.test(panel_change ~ covid_preprint))
+
+# Mann-Whitney (vs covid preprint)
+main_body_changes %>%
+  with(., wilcox.test(panel_change ~ source))
+
+# Fligner-Killeen's test for Homogeneity of Variance (vs covid preprint)
+main_body_changes %>%
+  with(., fligner.test(panel_change ~ source))
 
 # Publishing delays
 # Mann-Whitney (vs covid preprint)
@@ -1095,6 +1228,16 @@ abstract_scoring_citations %>%
   with(., kruskal.test(citations, change_outcomes))
 
 
+nbmod <- abstract_scoring_citations %>%
+  #  filter(covid_preprint == TRUE) %>%
+  with(., MASS::glm.nb(citations ~ as.factor(Highest_change) + delay_in_days))
+
+# Model summary
+nbmod %>% summary()
+nbmod %>% 
+  coef() %>% 
+  exp
+
 # Data tables -----
 
 # How many abstracts change overall
@@ -1154,15 +1297,15 @@ check %>%
   count(delay_in_days, Highest_change) %>% 
   ggplot(aes(x = delay_in_days, y = n, fill = Highest_change)) +
   geom_col() #+ 
-  scale_fill_brewer(palette = "Set2")
-  
+scale_fill_brewer(palette = "Set2")
+
 C1 <- check %>% 
-    filter(delay_in_days != "NA") %>% 
-    filter(delay_in_days >= "1") %>% 
-    filter(Highest_change != "NA") %>% 
-#  filter(Highest_change == "2") %>% 
+  filter(delay_in_days != "NA") %>% 
+  filter(delay_in_days >= "1") %>% 
+  filter(Highest_change != "NA") %>% 
+  #  filter(Highest_change == "2") %>% 
   ggplot(aes(x = published_journal, y = Highest_change)) +
- # geom_histogram() +
+  # geom_histogram() +
   geom_col() +
   labs(x = "Delay (days) for major changes")
 
@@ -1184,7 +1327,7 @@ abstract_scoring %>%
   mutate(covid_preprint = case_when(
     covid_preprint == T ~ "COVID article",
     covid_preprint == F ~ "non-COVID article")) %>% 
-#  filter(covid_preprint == "non-COVID article") %>%
+  #  filter(covid_preprint == "non-COVID article") %>%
   mutate(Highest_change = factor(Highest_change,
                                  levels = c("0", "1", "2"),
                                  labels = c("No Change", "Strengthening/softening, minor", "Major conclusion change"))) %>% 
@@ -1201,11 +1344,11 @@ abstract_scoring %>%
   scale_fill_manual(values = qualitative_hcl(3, palette = "Set2")) +
   theme(legend.position = "bottom") +
   facet_wrap(~covid_preprint) #+
-  ggsave("./figures/delay_score_both.png", height = 4, width = 6)
-  
+ggsave("./figures/delay_score_both.png", height = 4, width = 6)
+
 
 # Checking altmetric data impact on degree of change ----
-  
+
 # import data from original github
 citations <- read_csv("https://raw.githubusercontent.com/preprinting-a-pandemic/pandemic_preprints/1716d724a0072bd63b30b9afed14d00ebd7dd932/data/preprint_citations_20190901_20200430.csv")
 comments <- read_csv("https://raw.githubusercontent.com/preprinting-a-pandemic/pandemic_preprints/1716d724a0072bd63b30b9afed14d00ebd7dd932/data/preprint_comments_20190901_20200430.csv")  
@@ -1241,7 +1384,7 @@ A1 <- abstract_scoring_altmetrics %>%
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
   scale_fill_manual(values = qualitative_hcl(3, palette = "Set2")) +
   theme(legend.position = "none") #+
-  facet_wrap(~covid_preprint) #+
+facet_wrap(~covid_preprint) #+
 ggsave("./figures/delay_score_both.png", height = 4, width = 6)
 
 # altmetric score
@@ -1253,7 +1396,7 @@ A2 <- abstract_scoring_altmetrics %>%
   mutate(Highest_change = factor(Highest_change,
                                  levels = c("0", "1", "2"),
                                  labels = c("No Change", "Strengthening/softening, minor", "Major conclusion change"))) %>% 
- # filter(citations >= "1") %>%
+  # filter(citations >= "1") %>%
   ggplot(aes(x = Highest_change, y = score, fill = Highest_change)) +
   geom_boxplot(alpha = 0.5) +
   geom_jitter() +
@@ -1277,7 +1420,7 @@ A3 <- abstract_scoring_altmetrics %>%
   mutate(Highest_change = factor(Highest_change,
                                  levels = c("0", "1", "2"),
                                  labels = c("No Change", "Strengthening/softening, minor", "Major conclusion change"))) %>% 
-   filter(blogs >= "1") %>%
+  filter(blogs >= "1") %>%
   ggplot(aes(x = Highest_change, y = blogs, fill = Highest_change)) +
   geom_boxplot(alpha = 0.5) +
   geom_jitter() +
@@ -1366,7 +1509,7 @@ ggsave("./figures/delay_score_both.png", height = 4, width = 6)
 
 altmetric_plots <- A1 + A2 + A3 + A4 + A5 + A6 +
   plot_layout(ncol = 2) +
-#  plot_layout(guides = "collect") +
+  #  plot_layout(guides = "collect") +
   plot_annotation(tag_levels = "A") 
 
 altmetric_plots +
@@ -1426,7 +1569,7 @@ B6 <- main_body_changes %>%
   geom_boxplot(alpha = 0.5) +
   geom_jitter(alpha = 0.5) +
   labs(y = "Comments (>=1)", 
-       x = "Change in figuers",
+       x = "Change in figures",
        fill = "") +
   theme_minimal() +
   scale_y_log10(labels = scales::comma, limits = c(1, 1e6), expand = c(0, 0)) +
@@ -1452,7 +1595,7 @@ B1 <- main_body_changes %>%
   geom_boxplot(alpha = 0.5) +
   geom_jitter(alpha = 0.5) +
   labs(y = "Tweets (>=2)", 
-       x = "Change in figuers",
+       x = "Change in figures",
        fill = "") +
   theme_minimal() +
   scale_y_log10(labels = scales::comma, limits = c(1, 1e6), expand = c(0, 0)) +
