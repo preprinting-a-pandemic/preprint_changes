@@ -24,6 +24,7 @@ main_body_changes <- read.csv("./data/main_body_changes.csv")
 # Analysis of the changes in panels, tables and preprint-paper metadata 
 abstract_scoring <- read_csv("./data/abstract_scoring.csv") %>% 
   filter(exclude == "keep") %>% # Retain only non-excluded abstracts
+  mutate(calendar_date = as.numeric(max(as.Date(posted_date, format="%d/%m/%Y")) - as.Date(posted_date, format="%d/%m/%Y"))) %>% # Calculate number of days each preprint had been online by latest preprint posting date
   select(-X1.x) 
 # Analysis of abstracts using computational methods
 preprint_full <- read_csv("./data/preprint_details.csv")
@@ -34,7 +35,19 @@ rec_scores <- read_csv("./data/rec_scores.csv") %>% # Retain only non-excluded a
   filter(doi %in% abstract_scoring$doi) 
 # Granular analysis of abstract changes combined with the overall (Highest) score
 abstract_scoring_reconciled <- read_csv("./data/reconciled_scores.csv")
-# Granular analysis of abstract changes
+
+# Altmetric data
+# import data from original github
+citations <- read_csv("https://raw.githubusercontent.com/preprinting-a-pandemic/pandemic_preprints/1716d724a0072bd63b30b9afed14d00ebd7dd932/data/preprint_citations_20190901_20200430.csv")
+comments <- read_csv("https://raw.githubusercontent.com/preprinting-a-pandemic/pandemic_preprints/1716d724a0072bd63b30b9afed14d00ebd7dd932/data/preprint_comments_20190901_20200430.csv")  
+altmetric <- read_csv("https://raw.githubusercontent.com/preprinting-a-pandemic/pandemic_preprints/1716d724a0072bd63b30b9afed14d00ebd7dd932/data/preprint_altmetrics_20190901_20200430.csv")
+
+citations <- citations %>% select(doi:citations)
+altmetric <- altmetric %>% select(doi:policies)
+
+abstract_scoring_comments <- left_join(abstract_scoring, comments, by = "doi")
+abstract_scoring_citations <- left_join(abstract_scoring, citations, by = "doi")
+abstract_scoring_altmetrics <- left_join(abstract_scoring, altmetric, by = "doi")
 
 # Define functions ------
 
@@ -1226,50 +1239,23 @@ dtt <- abstract_scoring %>%
 #                                       pull(Highest_change),
 #                                     method = "bonferroni") %>% as.data.frame %>% pull(P.adjusted)), .id = 'var')
 
-# Usage
-# Kruskal-Wallis test (twitter)
-abstract_scoring_altmetrics %>%
-  with(., kruskal.test(twitter, Highest_change))
-
-abstract_scoring_altmetrics %>%
-  with(., kruskal.test(twitter, change_outcomes))
-
-# Kruskal-Wallis test (comments)
-abstract_scoring_comments %>%
-  with(., kruskal.test(comments_count, Highest_change))
-
-abstract_scoring_comments %>%
-  with(., kruskal.test(comments_count, change_outcomes))
-
-# Kruskal-Wallis test (citations)
-abstract_scoring_citations %>%
-  with(., kruskal.test(citations, Highest_change))
-
-# Post-hoc Dunn's test
-abstract_scoring_citations %>%
-  with(., dunn.test::dunn.test(citations, Highest_change, method = "bonferroni"))
-
-abstract_scoring_citations %>%
-  with(., kruskal.test(citations, change_outcomes))
-
-
-
-
-
 # Publishing delays
 # Mann-Whitney (vs covid preprint)
 abstract_scoring %>%
   with(., wilcox.test(delay_in_days ~ covid_preprint))
 
+# Median and IQRs
 abstract_scoring %>%
   group_by(covid_preprint) %>%
   summarise(median = median(delay_in_days), IQR = IQR(delay_in_days))
 
 # Kruskal-Wallis (vs degree of change)
+# COVID-19 articles
 abstract_scoring %>%
   filter(covid_preprint == T) %>%
   with(., kruskal.test(delay_in_days, Highest_change))
 
+# Non-COVID-19 articles
 abstract_scoring %>%
   filter(covid_preprint == F) %>%
   with(., kruskal.test(delay_in_days, Highest_change))
@@ -1279,6 +1265,7 @@ abstract_scoring %>%
   filter(covid_preprint == F) %>%
   with(., dunn.test::dunn.test(delay_in_days, Highest_change, method = "bonferroni"))
 
+# Median and IQRs
 abstract_scoring %>%
   filter(covid_preprint == F) %>%
   group_by(Highest_change) %>%
@@ -1287,15 +1274,93 @@ abstract_scoring %>%
 
 
 
-nbmod <- abstract_scoring_citations %>%
-  #  filter(covid_preprint == TRUE) %>%
-  with(., MASS::glm.nb(citations ~ as.factor(Highest_change) + delay_in_days))
+# Usage (twitter, comments, citations): univariate tests
+# Kruskal-Wallis tests (vs highest change, change outcomes)
+abstract_scoring_altmetrics %>% 
+  select(Highest_change, change_outcomes) %>%
+  map_df(~ broom::tidy(kruskal.test(abstract_scoring_altmetrics %>% pull(twitter), .)), .id = 'var')
+
+abstract_scoring_comments %>% 
+  select(Highest_change, change_outcomes) %>%
+  map_df(~ broom::tidy(kruskal.test(abstract_scoring_comments %>% pull(comments_count), .)), .id = 'var')
+
+abstract_scoring_citations %>% 
+  select(Highest_change, change_outcomes) %>%
+  map_df(~ broom::tidy(kruskal.test(abstract_scoring_citations %>% pull(citations), .)), .id = 'var')
+
+# Spearman's rank correlation (vs difflib change ratio, Word change ratio)
+abstract_scoring_altmetrics %>% 
+  select(`difflib standard change_ratio`, Word_change_ratio) %>%
+  map_df(~ broom::tidy(cor.test(abstract_scoring_altmetrics %>% pull(twitter), ., method = "spearman")), .id = 'var')
+
+abstract_scoring_comments %>% 
+  select(`difflib standard change_ratio`, Word_change_ratio) %>%
+  map_df(~ broom::tidy(cor.test(abstract_scoring_comments %>% pull(comments_count), ., method = "spearman")), .id = 'var')
+
+abstract_scoring_citations %>% 
+  select(`difflib standard change_ratio`, Word_change_ratio) %>%
+  map_df(~ broom::tidy(cor.test(abstract_scoring_citations %>% pull(citations), ., method = "spearman")), .id = 'var')
+
+
+# Regression analysis
+# Set predictors
+form_usage <- formula(. ~ as.factor(Highest_change) + as.factor(change_outcomes) + delay_in_days + covid_preprint + `difflib standard change_ratio` + Word_change_ratio + calendar_date)
+
+# Twitter
+# Poisson regression
+twitter_poismod <- abstract_scoring_altmetrics %>%
+  glm(formula = update(form_usage, twitter ~ .), data = ., family = "poisson")
+
+# Negative binomial regression
+twitter_nbmod <- abstract_scoring_altmetrics %>%
+  MASS::glm.nb(formula = update(form_usage, twitter ~ .), data = .)
+
+# Confirm negative binomial as better fitting model
+AIC(twitter_nbmod, twitter_poismod)
 
 # Model summary
-nbmod %>% summary()
-nbmod %>% 
+twitter_nbmod %>% summary()
+twitter_nbmod %>% car::vif()
+twitter_nbmod %>% 
   coef() %>% 
   exp
+
+twitter_nbmod %>% coef() %>% .["calendar_date"] %>% exp() %>% .^30 # Calculate multiplicative rate for each subsequent month of calendar_date
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 # Data tables -----
 
@@ -1405,21 +1470,6 @@ abstract_scoring %>%
   facet_wrap(~covid_preprint) #+
 ggsave("./figures/delay_score_both.png", height = 4, width = 6)
 
-
-# Checking altmetric data impact on degree of change ----
-
-# import data from original github
-citations <- read_csv("https://raw.githubusercontent.com/preprinting-a-pandemic/pandemic_preprints/1716d724a0072bd63b30b9afed14d00ebd7dd932/data/preprint_citations_20190901_20200430.csv")
-comments <- read_csv("https://raw.githubusercontent.com/preprinting-a-pandemic/pandemic_preprints/1716d724a0072bd63b30b9afed14d00ebd7dd932/data/preprint_comments_20190901_20200430.csv")  
-altmetric <- read_csv("https://raw.githubusercontent.com/preprinting-a-pandemic/pandemic_preprints/1716d724a0072bd63b30b9afed14d00ebd7dd932/data/preprint_altmetrics_20190901_20200430.csv")
-
-citations <- citations %>% select(doi:citations)
-altmetric <- altmetric %>% select(doi:policies)
-
-abstract_scoring_comments <- left_join(abstract_scoring, comments, by = "doi")
-abstract_scoring_citations <- left_join(abstract_scoring, citations, by = "doi")
-abstract_scoring_altmetrics <- left_join(abstract_scoring, altmetric, by = "doi")
-main_body_changes_altmetrics <- left_join(main_body_changes, altmetric, by = "doi")
 
 # Plots
 # Tweets 
