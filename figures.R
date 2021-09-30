@@ -22,13 +22,16 @@ preprint_info <- read_csv("./data/preprint_info.csv")
 # Preprint metadata collected as part of Fraser et al (code: 10.5281/zenodo.4501924) 
 main_body_changes <- read.csv("./data/main_body_changes.csv")
 # Analysis of the changes in panels, tables and preprint-paper metadata 
-abstract_scoring <- read_csv("./data/abstract_scoring.csv") %>% filter(exclude == "keep") %>% select(-X1.x) # Retain only non-excluded abstracts
+abstract_scoring <- read_csv("./data/abstract_scoring.csv") %>% 
+  filter(exclude == "keep") %>% # Retain only non-excluded abstracts
+  select(-X1.x) 
 # Analysis of abstracts using computational methods
 preprint_full <- read_csv("./data/preprint_details.csv")
 # Preprint metadata collected as part of Fraser et al (code: 10.5281/zenodo.4501924) 
 panels <- read_csv("./data/panels_server.csv")
 # Total panels broken down by server and COVID-status
-rec_scores <- read_csv("./data/rec_scores.csv")
+rec_scores <- read_csv("./data/rec_scores.csv") %>% # Retain only non-excluded abstracts
+  filter(doi %in% abstract_scoring$doi) 
 # Granular analysis of abstract changes combined with the overall (Highest) score
 abstract_scoring_reconciled <- read_csv("./data/reconciled_scores.csv")
 # Granular analysis of abstract changes
@@ -639,6 +642,22 @@ F3D <- abstract_scoring %>%
   theme(legend.position = "bottom") +
   labs(x = "Sum of positive scores", y = "Sum of negative scores", fill = "", color = "") 
 
+# # Alternate version
+# F3D_alt <- abstract_scoring %>% 
+#   mutate(covid_preprint = case_when(
+#     covid_preprint == T ~ "COVID article",
+#     covid_preprint == F ~ "non-COVID article"),
+#     annot_sum = `1+_annotations` + `1-_annotations`,
+#     prop_pos = `1+_annotations`/annot_sum,
+#     prop_pos = replace(prop_pos, is.nan(prop_pos), 0)) %>% 
+#   filter(covid_preprint != "NA") %>%
+#   ggplot(aes(x= annot_sum, y = prop_pos, color = covid_preprint)) +
+#   geom_point(alpha = 0.6, position = position_jitterdodge(jitter.height=0.05, jitter.width = 0, dodge.width=0.3)) +
+#   scale_x_continuous(minor_breaks = seq(0, 16, 1)) +
+#   theme_minimal() +
+#   theme(legend.position = "none") +
+#   labs(x = "Sum of positive and negative scores", y = "Proportion positive scores", fill = "", color = "") 
+
 F3E <- rec_scores %>%
   mutate(covid_preprint = case_when(
     covid_preprint == T ~ "COVID article",
@@ -1105,15 +1124,15 @@ main_body_changes %>%
 
 
 # Panels and tables numbers
-# Mann-Whitney (vs covid preprint)
+# Mann-Whitney (vs COVID preprint)
 panels %>%
   mutate(covid_preprint = case_when(                                    # Redefine COVID vs non-COVID articles
     grepl("^COVID", preprint_paper) == T ~ "COVID article",
     grepl("^COVID", preprint_paper) == F ~ "non-COVID article")) %>%
-    filter(grepl("preprint", preprint_paper)) %>%                       # Select only preprints to prevent double accounting
+  filter(grepl("preprint", preprint_paper)) %>%                       # Select only preprints to prevent double accounting
   with(., wilcox.test(main_total ~ covid_preprint))
 
-# Mann-Whitney (vs covid paper)
+# Mann-Whitney (vs COVID paper)
 panels %>%
   mutate(covid_preprint = case_when(                                    # Redefine COVID vs non-COVID articles
     grepl("^COVID", preprint_paper) == T ~ "COVID article",
@@ -1132,21 +1151,110 @@ panels %>%
   with(., wilcox.test(main_total ~ source))
 
 # Panels and table change
-# Mann-Whitney (vs covid preprint)
+# Mann-Whitney (vs COVID preprint)
 main_body_changes %>%
   with(., wilcox.test(panel_change ~ covid_preprint))
 
-# Fligner-Killeen's test for Homogeneity of Variance (vs covid preprint)
+# Fligner-Killeen's test for Homogeneity of Variance (vs COVID preprint)
 main_body_changes %>%
   with(., fligner.test(panel_change ~ covid_preprint))
 
-# Mann-Whitney (vs covid preprint)
+# Mann-Whitney (vs source)
 main_body_changes %>%
   with(., wilcox.test(panel_change ~ source))
 
-# Fligner-Killeen's test for Homogeneity of Variance (vs covid preprint)
+# Fligner-Killeen's test for Homogeneity of Variance (vs source)
 main_body_changes %>%
   with(., fligner.test(panel_change ~ source))
+
+
+
+# Degree of changes
+# Mann-Whitney (difflib change ratio vs COVID article)
+abstract_scoring %>%
+  with(., wilcox.test(`difflib standard change_ratio` ~ covid_preprint))
+
+# Mann-Whitney (Word change ratio vs COVID article)
+abstract_scoring %>%
+  with(., wilcox.test(Word_change_ratio ~ covid_preprint))
+
+# Compare automated versus manual change measures
+# Kruskal-Wallis tests (all, COVID, non-COVID)
+abstract_scoring %>% 
+  select(`difflib standard change_ratio`, Word_change_ratio, `1+_annotations`, `1-_annotations`) %>%
+  map_df(~ broom::tidy(kruskal.test(., 
+                                    abstract_scoring %>% 
+                                      pull(Highest_change))), .id = 'var')
+# abstract_scoring %>% 
+#   filter(covid_preprint == T) %>%
+#   select(`difflib standard change_ratio`, Word_change_ratio, `1+_annotations`, `1-_annotations`) %>%
+#   map_df(~ broom::tidy(kruskal.test(., 
+#                                 abstract_scoring %>% 
+#                                   filter(covid_preprint == T) %>% 
+#                                   pull(Highest_change))), .id = 'var')
+# abstract_scoring %>% 
+#   filter(covid_preprint == F) %>%
+#   select(`difflib standard change_ratio`, Word_change_ratio, `1+_annotations`, `1-_annotations`) %>%
+#   map_df(~ broom::tidy(kruskal.test(., 
+#                                     abstract_scoring %>% 
+#                                       filter(covid_preprint == F) %>% 
+#                                       pull(Highest_change))), .id = 'var')
+
+# Post-hoc Dunn's tests (all, COVID, non-COVID)
+dtt <- abstract_scoring %>% 
+  select(`difflib standard change_ratio`, Word_change_ratio, `1+_annotations`, `1-_annotations`) %>%
+  map_df(~ broom::tidy(dunn.test::dunn.test(., 
+                                            abstract_scoring %>% 
+                                              pull(Highest_change),
+                                            method = "bonferroni") %>% as.data.frame %>% pull(P.adjusted)), .id = 'var')
+
+# dttf <- abstract_scoring %>% 
+#   filter(covid_preprint == T) %>%
+#   select(`difflib standard change_ratio`, Word_change_ratio, `1+_annotations`, `1-_annotations`) %>%
+#   map_df(~ broom::tidy(dunn.test::dunn.test(., 
+#                                             abstract_scoring %>% 
+#                                               filter(covid_preprint == T) %>% 
+#                                               pull(Highest_change),
+#                                             method = "bonferroni") %>% as.data.frame %>% pull(P.adjusted)), .id = 'var')
+# 
+# dttt <- abstract_scoring %>% 
+#   filter(covid_preprint == F) %>%
+#   select(`difflib standard change_ratio`, Word_change_ratio, `1+_annotations`, `1-_annotations`) %>%
+#   map_df(~ broom::tidy(dunn.test::dunn.test(., 
+#                                     abstract_scoring %>% 
+#                                       filter(covid_preprint == F) %>% 
+#                                       pull(Highest_change),
+#                                     method = "bonferroni") %>% as.data.frame %>% pull(P.adjusted)), .id = 'var')
+
+# Usage
+# Kruskal-Wallis test (twitter)
+abstract_scoring_altmetrics %>%
+  with(., kruskal.test(twitter, Highest_change))
+
+abstract_scoring_altmetrics %>%
+  with(., kruskal.test(twitter, change_outcomes))
+
+# Kruskal-Wallis test (comments)
+abstract_scoring_comments %>%
+  with(., kruskal.test(comments_count, Highest_change))
+
+abstract_scoring_comments %>%
+  with(., kruskal.test(comments_count, change_outcomes))
+
+# Kruskal-Wallis test (citations)
+abstract_scoring_citations %>%
+  with(., kruskal.test(citations, Highest_change))
+
+# Post-hoc Dunn's test
+abstract_scoring_citations %>%
+  with(., dunn.test::dunn.test(citations, Highest_change, method = "bonferroni"))
+
+abstract_scoring_citations %>%
+  with(., kruskal.test(citations, change_outcomes))
+
+
+
+
 
 # Publishing delays
 # Mann-Whitney (vs covid preprint)
@@ -1176,56 +1284,7 @@ abstract_scoring %>%
   group_by(Highest_change) %>%
   summarise(median = median(delay_in_days), IQR = IQR(delay_in_days))
 
-# Table for correlations
 
-corr_table <- abstract_scoring %>% 
-  select(doi, `difflib standard change_ratio`, Word_change_ratio, `1+_annotations`, `1-_annotations`) %>% 
-  left_join(rec_scores, by = "doi")
-
-# Correlation analysis ----
-
-abstract_scoring %>% 
-  filter(covid_preprint == T) %>%
-  select(Word_change_ratio, `difflib standard change_ratio`, `1+_annotations`, `1-_annotations`) %>%
-  map_df(~ broom::tidy(cor.test(., 
-                                abstract_scoring %>% 
-                                  filter(covid_preprint == T) %>% 
-                                  pull(Highest_change),
-                                method = "spearman")), .id = 'var')
-abstract_scoring %>% 
-  filter(covid_preprint == F) %>%
-  select(Word_change_ratio, `difflib standard change_ratio`, `1+_annotations`, `1-_annotations`) %>%
-  map_df(~ broom::tidy(cor.test(., 
-                                abstract_scoring %>% 
-                                  filter(covid_preprint == F) %>% 
-                                  pull(Highest_change),
-                                method = "spearman")), .id = 'var')
-
-# Usage
-# Kruskal-Wallis test (twitter)
-abstract_scoring_altmetrics %>%
-  with(., kruskal.test(twitter, Highest_change))
-
-abstract_scoring_altmetrics %>%
-  with(., kruskal.test(twitter, change_outcomes))
-
-# Kruskal-Wallis test (comments)
-abstract_scoring_comments %>%
-  with(., kruskal.test(comments_count, Highest_change))
-
-abstract_scoring_comments %>%
-  with(., kruskal.test(comments_count, change_outcomes))
-
-# Kruskal-Wallis test (citations)
-abstract_scoring_citations %>%
-  with(., kruskal.test(citations, Highest_change))
-
-# Post-hoc Dunn's test
-abstract_scoring_citations %>%
-  with(., dunn.test::dunn.test(citations, Highest_change, method = "bonferroni"))
-
-abstract_scoring_citations %>%
-  with(., kruskal.test(citations, change_outcomes))
 
 
 nbmod <- abstract_scoring_citations %>%
