@@ -24,7 +24,7 @@ main_body_changes <- read.csv("./data/main_body_changes.csv")
 # Analysis of the changes in panels, tables and preprint-paper metadata 
 abstract_scoring <- read_csv("./data/abstract_scoring.csv") %>% 
   filter(exclude == "keep") %>% # Retain only non-excluded abstracts
-  mutate(calendar_date = as.numeric(max(as.Date(posted_date, format="%d/%m/%Y")) - as.Date(posted_date, format="%d/%m/%Y"))) %>% # Calculate number of days each preprint had been online by latest preprint posting date
+  mutate(calendar_date = as.numeric(as.Date("30/4/2020", format="%d/%m/%Y") - as.Date(posted_date, format="%d/%m/%Y"))) %>% # Calculate number of days each preprint had been online by latest preprint posting date
   select(-X1.x) 
 # Analysis of abstracts using computational methods
 preprint_full <- read_csv("./data/preprint_details.csv")
@@ -82,35 +82,6 @@ F1A <- preprint_full %>%
   theme(plot.title = element_text(hjust = 0.5)) +
   theme(legend.position = "none")
 
-# CONFINT VERSION
-F1A_alt <- preprint_full %>%
-  mutate(covid_preprint = case_when(
-    covid_preprint == T ~ "COVID article",
-    covid_preprint == F ~ "Non-COVID article"
-  )) %>% 
-  filter(posted_date >= as.Date("2020-01-01")) %>% 
-  count(is_published, covid_preprint) %>% 
-  group_by(covid_preprint) %>%
-  mutate(total_n = sum(n), 
-         proportion = (n/sum(n)) * 100) %>%
-  rowwise %>%
-  mutate(lowerCI = prop.test(n, total_n, correct=FALSE)$conf.int[1]*100,
-         upperCI = prop.test(n, total_n, correct=FALSE)$conf.int[2]*100) %>% 
-  filter(is_published == T) %>%
-  ggplot(aes(x = covid_preprint, y = proportion, fill = covid_preprint))+
-  geom_col(position = "dodge") +
-  geom_errorbar(aes(ymin = lowerCI, ymax = upperCI), width = 0.3, position="dodge") +
-  labs(y ="Percentage of preprints published \n between 1st Jan - 30 April", 
-       x = "") +
-  geom_text(aes(label=n, group = covid_preprint), color = "white", size=4, position = position_stack(vjust = .5)) +
-  scale_fill_manual(values = qualitative_hcl(n = 2, palette = "Set2")) +
-  theme_minimal() +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
-  theme(plot.title = element_text(hjust = 0.5)) +
-  theme(legend.position = "none")
-
-
-
 F1B <- main_body_changes %>%
   mutate(covid_preprint = case_when(
     covid_preprint == T ~ "COVID article",
@@ -148,33 +119,6 @@ F1C <-   main_body_changes %>%
   ungroup %>% 
   ggplot(aes(x = source_data, y = proportion, fill = covid_preprint)) +
   geom_col(position = "dodge", color = "grey50", size = 0.25) +
-  labs(x = "Data availability after publication", y = "Percentage of articles", fill = "") +
-  theme_minimal() +
-  scale_fill_manual(values = qualitative_hcl(n = 2, palette = "Set2")) +  
-  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
-  guides(color = FALSE) +
-  theme(legend.position = "none")
-
-# CONFINT VERSION
-F1C_alt <- main_body_changes %>%
-  mutate(covid_preprint = case_when(
-    covid_preprint == T ~ "COVID article",
-    covid_preprint == F ~ "non-COVID article"),
-    source_data = factor(case_when(source_data == -2 ~ "Less accessible",
-                                   source_data == -1  ~ "Upon request",
-                                   source_data == 0 ~ "Supplemental or repository",
-                                   source_data == 1 ~ "More available",
-                                   is.na(source_data) ~ "NA"),
-                         levels = c("Less accessible",  "Upon request", "Supplemental or repository", "More available", "NA"))) %>%
-  count(covid_preprint, source_data) %>%
-  group_by(covid_preprint) %>%
-  mutate(proportion = (n/sum(n))*100,
-         lowerCI = MultinomCI(n, conf.level=0.95, method = "wilson")[,2]*100,
-         upperCI = MultinomCI(n, conf.level=0.95, method = "wilson")[,3]*100) %>% 
-  ungroup %>% 
-  ggplot(aes(x = source_data, y = proportion, fill = covid_preprint)) +
-  geom_col(position = "dodge", color = "grey50", size = 0.25, width = 0.5) +
-  geom_errorbar(aes(ymin = lowerCI, ymax = upperCI), position = position_dodge(0.5), width = 0.2) +
   labs(x = "Data availability after publication", y = "Percentage of articles", fill = "") +
   theme_minimal() +
   scale_fill_manual(values = qualitative_hcl(n = 2, palette = "Set2")) +  
@@ -883,17 +827,6 @@ S_Fig_3 +
   ggsave("./figures/changes_S_Fig_3.png", width = 10, height = 12)
 
 # Fig 4 -----
-comments <- read_csv("https://raw.githubusercontent.com/preprinting-a-pandemic/pandemic_preprints/1716d724a0072bd63b30b9afed14d00ebd7dd932/data/preprint_comments_20190901_20200430.csv")  
-altmetric <- read_csv("https://raw.githubusercontent.com/preprinting-a-pandemic/pandemic_preprints/1716d724a0072bd63b30b9afed14d00ebd7dd932/data/preprint_altmetrics_20190901_20200430.csv")
-citations <- read_csv("https://raw.githubusercontent.com/preprinting-a-pandemic/pandemic_preprints/1716d724a0072bd63b30b9afed14d00ebd7dd932/data/preprint_citations_20190901_20200430.csv")
-
-citations <- citations %>% select(doi:citations)
-altmetric <- altmetric %>% select(doi:policies)
-
-abstract_scoring_comments <- left_join(abstract_scoring, comments, by = "doi")
-abstract_scoring_altmetrics <- left_join(abstract_scoring, altmetric, by = "doi")
-abstract_scoring_citations <- left_join(abstract_scoring, citations, by = "doi")
-
 F4A <- abstract_scoring_altmetrics %>% 
   mutate(covid_preprint = case_when(
     covid_preprint == T ~ "COVID article",
@@ -1001,7 +934,7 @@ F4E <- abstract_scoring_citations %>%
                                  labels = c("No Change", "Strengthening/softening, minor", "Major conclusion change"))) %>% 
   filter(citations >= 1) %>%
   ggplot(aes(x = Highest_change, y = citations, fill = Highest_change, color = Highest_change)) +
-  geom_jitter(aes(colour = Highest_change), shape = 21, size = 0.6, alpha = 0.6, width = 0.3) ++
+  geom_jitter(aes(colour = Highest_change), shape = 21, size = 0.6, alpha = 0.6, width = 0.3) +
   geom_boxplot(outlier.shape = NA, alpha = 0.3, color = "black") +
   labs(y = "Citations (>=1)", 
        x = "Degree of change",
@@ -1098,6 +1031,8 @@ main_body_changes %>%
   )) %>% 
   with(., table(covid_preprint, peer_review)) %>%
   chisq.test()
+
+
 
 # Data availability
 # Fisher's exact test of association
@@ -1239,6 +1174,8 @@ dtt <- abstract_scoring %>%
 #                                       pull(Highest_change),
 #                                     method = "bonferroni") %>% as.data.frame %>% pull(P.adjusted)), .id = 'var')
 
+
+
 # Publishing delays
 # Mann-Whitney (vs covid preprint)
 abstract_scoring %>%
@@ -1273,7 +1210,6 @@ abstract_scoring %>%
 
 
 
-
 # Usage (twitter, comments, citations): univariate tests
 # Kruskal-Wallis tests (vs highest change, change outcomes)
 abstract_scoring_altmetrics %>% 
@@ -1304,7 +1240,7 @@ abstract_scoring_citations %>%
 
 # Regression analysis
 # Set predictors
-form_usage <- formula(. ~ as.factor(Highest_change) + as.factor(change_outcomes) + delay_in_days + covid_preprint + `difflib standard change_ratio` + Word_change_ratio + calendar_date)
+form_usage <- formula(. ~ as.factor(Highest_change) + as.factor(change_outcomes) + `difflib standard change_ratio` + Word_change_ratio + covid_preprint + delay_in_days + calendar_date)
 
 # Twitter
 # Poisson regression
@@ -1313,54 +1249,103 @@ twitter_poismod <- abstract_scoring_altmetrics %>%
 
 # Negative binomial regression
 twitter_nbmod <- abstract_scoring_altmetrics %>%
-  MASS::glm.nb(formula = update(form_usage, twitter ~ .), data = .)
+  MASS::glm.nb(formula = update(form_usage, twitter ~ .), data = ., control = glm.control(maxit = 100))
 
 # Confirm negative binomial as better fitting model
 AIC(twitter_nbmod, twitter_poismod)
 
 # Model summary
 twitter_nbmod %>% summary()
+# LRT test
+drop1(twitter_nbmod, test = "LRT") %>% as.data.frame %>% round(3)
+# Check VIF
 twitter_nbmod %>% car::vif()
+# Calc rate ratios
 twitter_nbmod %>% 
   coef() %>% 
-  exp
-
-twitter_nbmod %>% coef() %>% .["calendar_date"] %>% exp() %>% .^30 # Calculate multiplicative rate for each subsequent month of calendar_date
-
-
-
-
-
-
-
-
-
-
-
+  exp %>%
+  round(2) %>%
+  as.data.frame
+# Calc 95% CI rate ratios
+twitter_nbmod %>% 
+  confint() %>% 
+  exp %>%
+  round(2)
+# Calculate multiplicative rate for each subsequent month of calendar_date
+twitter_nbmod %>% coef() %>% .["calendar_date"] %>% exp() %>% .^30 
+# Calculate 95% CI multiplicative rates for each subsequent month of calendar_date
+twitter_nbmod %>% confint() %>% as.data.frame %>% .["calendar_date",] %>% exp() %>% .^30 
 
 
+# Comments
+# Poisson regression
+comment_poismod <- abstract_scoring_comments %>%
+  glm(formula = update(form_usage, comments_count ~ .), data = ., family = "poisson")
+
+# Negative binomial regression
+comment_nbmod <- abstract_scoring_comments %>%
+  MASS::glm.nb(formula = update(form_usage, comments_count ~ .), data = ., control = glm.control(maxit = 100))
+
+# Confirm negative binomial as better fitting model
+AIC(comment_nbmod, comment_poismod)
+
+# Model summary
+comment_nbmod %>% summary()
+# LRT test
+drop1(comment_nbmod, test = "LRT") %>% as.data.frame %>% round(3)
+# Check VIF
+comment_nbmod %>% car::vif()
+# Calc rate ratios
+comment_nbmod %>% 
+  coef() %>% 
+  exp %>%
+  round(2) %>%
+  as.data.frame
+# Calc 95% CI rate ratios
+comment_nbmod %>% confint(parm = c("(Intercept)", "as.factor(Highest_change)1", "as.factor(Highest_change)2", 
+                                   "`difflib standard change_ratio`", "Word_change_ratio", "covid_preprintTRUE", 
+                                   "delay_in_days", "calendar_date")) %>% 
+  exp %>%
+  round(2)
+# Calculate multiplicative rate for each subsequent month of calendar_date
+comment_nbmod %>% coef() %>% .["calendar_date"] %>% exp() %>% .^30 
+# Calculate 95% CI multiplicative rates for each subsequent month of calendar_date
+comment_nbmod %>% confint(parm = "calendar_date") %>% as.data.frame %>% exp() %>% .^30 
 
 
+# Citations
+# Poisson regression
+citations_poismod <- abstract_scoring_citations %>%
+  glm(formula = update(form_usage, citations ~ .), data = ., family = "poisson")
 
+# Negative binomial regression
+citations_nbmod <- abstract_scoring_citations %>%
+  MASS::glm.nb(formula = update(form_usage, citations ~ .), data = ., control = glm.control(maxit = 100))
 
+# Confirm negative binomial as better fitting model
+AIC(citations_nbmod, citations_poismod)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+# Model summary
+citations_nbmod %>% summary()
+# LRT test
+drop1(citations_nbmod, test = "LRT") %>% as.data.frame %>% round(3)
+# Check VIF
+citations_nbmod %>% car::vif()
+# Calc rate ratios
+citations_nbmod %>% 
+  coef() %>% 
+  exp %>%
+  round(2) %>%
+  as.data.frame
+# Calc 95% CI rate ratios
+citations_nbmod %>% 
+  confint() %>% 
+  exp %>%
+  round(2)
+# Calculate multiplicative rate for each subsequent month of calendar_date
+citations_nbmod %>% coef() %>% .["calendar_date"] %>% exp() %>% .^30 
+# Calculate 95% CI multiplicative rates for each subsequent month of calendar_date
+citations_nbmod %>% confint() %>% as.data.frame %>% .["calendar_date",] %>% exp() %>% .^30 
 
 # Data tables -----
 
